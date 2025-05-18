@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const provider = () => {
-  return <div>provider</div>;
+const Provider = ({ children }: { children: ReactNode }) => {
+  return <div>{children}</div>;
 };
 
-export default provider;
+export default Provider;
