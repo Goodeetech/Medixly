@@ -1,5 +1,5 @@
 import React from "react";
-import DashBoardProvider from "../provider";
+import DashBoardProvider from "./provider";
 
 export default function DashboardLayout({
   children,

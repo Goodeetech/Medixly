@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const AppSidebar = () => {
   const pathname = usePathname();
@@ -99,18 +100,18 @@ const AppSidebar = () => {
                     key={item.name}
                     className={` ${
                       pathname.startsWith(item.path) && "bg-[#D8D8D8] "
-                    }px-2 z-10 rounded-lg `}
+                    } px-2 z-10 rounded-lg `}
                   >
                     <SidebarMenuButton
                       asChild
                       className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
-                      <a href={item.path}>
+                      <Link href={item.path}>
                         <item.icon color="#3DAEAC" strokeWidth={2} size={64} />
                         <span className="text-md font-semibold text-gray-800 px-1 ">
                           {item.name}
                         </span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
