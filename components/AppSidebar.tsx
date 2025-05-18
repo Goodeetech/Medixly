@@ -80,11 +80,11 @@ const AppSidebar = () => {
   ];
 
   return (
-    <div className="shadow-md">
+    <div>
       <Sidebar>
-        <SidebarContent className=" ">
+        <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel className="my-4">
+            <SidebarGroupLabel className="my-4 outline-none">
               <Image
                 src={"/logo1.png"}
                 alt="logo"
@@ -98,17 +98,28 @@ const AppSidebar = () => {
                 {sidebarItems.map((item) => (
                   <SidebarMenuItem
                     key={item.name}
-                    className={` ${
-                      pathname.startsWith(item.path) && "bg-[#D8D8D8] "
-                    } px-2 z-10 rounded-lg `}
+                    className={`hover:text-gray-800 text-gray-400 transition-all duration-600  px-2 z-10  rounded-lg relative  ${
+                      pathname.startsWith(item.path) && "bg-gray-100"
+                    }`}
                   >
+                    <div
+                      className={`bg-gradient-to-b from-[#4382BE] to-[#45B4A6] left-0 h-full w-2 ${
+                        pathname.startsWith(item.path) &&
+                        "rounded-br-sm rounded-tr-sm absolute"
+                      }`}
+                    ></div>
+
                     <SidebarMenuButton
                       asChild
-                      className="hover:bg-[#D8D8D8] transition-all duration-300"
+                      // className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
                       <Link href={item.path}>
                         <item.icon color="#3DAEAC" strokeWidth={2} size={64} />
-                        <span className="text-md font-semibold text-gray-800 px-1 ">
+                        <span
+                          className={`text-md font-semibold  px-1   ${
+                            pathname.startsWith(item.path) && "text-gray-800 "
+                          } `}
+                        >
                           {item.name}
                         </span>
                       </Link>

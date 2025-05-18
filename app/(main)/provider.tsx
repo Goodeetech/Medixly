@@ -7,7 +7,7 @@ const DashBoardProvider = ({ children }: { children: ReactNode }) => {
     <div>
       <SidebarProvider>
         <AppSidebar />
-        <main>
+        <main className="w-full">
           <SidebarTrigger />
           {children}
         </main>
