@@ -41,12 +41,6 @@ const AppSidebar = () => {
       description: "Browse and attempt quizzes by topic or difficulty.",
     },
     {
-      name: "Create Quiz",
-      icon: BellRing,
-      path: "/create",
-      description: "Design and publish your own quizzes.",
-    },
-    {
       name: "Practice Mode",
       icon: Calendar,
       path: "/practice",

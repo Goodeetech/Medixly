@@ -18,15 +18,19 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import { Button } from "../ui/button";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const NavBar = () => {
-  const { user } = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
+  const router = useRouter();
 
-  if (!user) {
-    redirect("/"); // redirect unauthenticated users
-  }
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/"); // Don't redirect until Clerk is ready
+    }
+  }, [isLoaded, isSignedIn, router]);
 
+  if (!isLoaded) return null;
   return (
     <div className=" flex rounded-xl justify-between px-2 items-center bg-gray-100 mx-6">
       <div className="p-4 w-full flex">
