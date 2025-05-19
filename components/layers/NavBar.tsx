@@ -22,7 +22,10 @@ import { redirect } from "next/navigation";
 
 const NavBar = () => {
   const { user } = useUser();
-  console.log(user);
+
+  if (!user) {
+    redirect("/"); // redirect unauthenticated users
+  }
 
   return (
     <div className=" flex rounded-xl justify-between px-2 items-center bg-gray-100 mx-6">
