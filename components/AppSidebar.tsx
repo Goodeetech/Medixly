@@ -87,7 +87,7 @@ const AppSidebar = () => {
               />
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu className="flex flex-col gap-6 mt-4 w-full justify-center">
+              <SidebarMenu className="flex flex-col gap-6 mt-8 w-full justify-center">
                 {sidebarItems.map((item) => (
                   <SidebarMenuItem
                     key={item.name}
@@ -109,7 +109,7 @@ const AppSidebar = () => {
                       <Link href={item.path}>
                         <item.icon color="#3DAEAC" strokeWidth={2} size={64} />
                         <span
-                          className={`text-md font-semibold  px-1   ${
+                          className={`text-[16px]  px-1   ${
                             pathname.startsWith(item.path) && "text-gray-800 "
                           } `}
                         >
