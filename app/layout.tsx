@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "./globals.css";
 import Provider from "./provider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const sora = Sora({
   variable: "--font-geist-sans",
@@ -11,7 +12,7 @@ const sora = Sora({
 export const metadata: Metadata = {
   title: "Medixly",
   description:
-    "Never miss a dose again. Medixly is your smart medication companion — built to remind, track, and keep you on schedule with ease. Stay healthy, stay consistent.",
+    "Medixly is a modern and interactive quiz web app designed to help medical students, healthcare professionals, and curious minds test and improve their knowledge through dynamic, customizable quizzes.",
 };
 
 export default function RootLayout({
@@ -20,10 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${sora.className} antialiased`}>
-        <Provider>{children}</Provider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${sora.className} antialiased`}>
+          <Provider>{children}</Provider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

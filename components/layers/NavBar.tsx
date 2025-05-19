@@ -1,3 +1,4 @@
+"use client";
 import {
   Bell,
   Command,
@@ -6,10 +7,23 @@ import {
   MessageCircle,
   Search,
 } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Input } from "../ui/input";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+import { Button } from "../ui/button";
+import { redirect } from "next/navigation";
 
 const NavBar = () => {
+  const { user } = useUser();
+  console.log(user);
+
   return (
     <div className=" flex rounded-xl justify-between px-2 items-center bg-gray-100 mx-6">
       <div className="p-4 w-full flex">
@@ -17,7 +31,7 @@ const NavBar = () => {
           <Search className="text-gray-500" />
           <Input
             type="text"
-            placeholder="Search drugs"
+            placeholder="Search medicine"
             className="!border-none !ring-0 !outline-none !focus:outline-none !focus:ring-0 !focus-visible:outline-none !shadow-none bg-transparent text-sm text-gray-700 placeholder:text-gray-400"
           />
           <div className="flex items-center bg-gray-200 px-1 rounded-md ">
@@ -26,12 +40,23 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <div className="px-3 flex gap-4">
+      <div className="px-3 flex gap-4 items-center">
         <div className="p-2 bg-white rounded-full">
           <Mail color=" #6a7282" size={20} />
         </div>
         <div className="p-2 bg-white rounded-full">
           <Bell color=" #6a7282" size={20} />
+        </div>
+        <div className="flex gap-2">
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <div className="lg:block hidden  text-xs">
+            <h2>{user?.fullName}</h2>
+            <h3 className="text-gray-500">
+              {user?.emailAddresses[0]?.emailAddress}
+            </h3>
+          </div>
         </div>
       </div>
     </div>
