@@ -9,8 +9,8 @@ const CreateQuiz = () => {
   const [step, setStep] = useState(1);
   const router = useRouter();
   return (
-    <div className="py-8 px-6 bg-gray-100 mx-6 my-4 rounded-sm">
-      <div className="flex flex-col gap-6 lg:px-30 px-8">
+    <div className="py-8 lg:px-6 px-2 bg-gray-100 lg:mx-6 mx-2  my-4 rounded-sm">
+      <div className="flex flex-col gap-6 lg:px-30 px-4">
         <div className=" flex gap-6 items-center">
           <div onClick={() => router.back()} className="cursor-pointer">
             <ArrowLeft />

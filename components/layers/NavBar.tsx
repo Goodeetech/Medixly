@@ -32,7 +32,7 @@ const NavBar = () => {
 
   if (!isLoaded) return null;
   return (
-    <div className=" flex rounded-xl justify-between px-2 items-center bg-gray-100 mx-6">
+    <div className=" md:flex hidden rounded-xl justify-between px-2 items-center bg-gray-100 mx-6">
       <div className="p-4 w-full flex">
         <div className="bg-white  rounded-full px-6 py-1 flex items-center gap-4">
           <Search className="text-gray-500" />
