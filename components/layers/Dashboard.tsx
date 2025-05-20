@@ -2,6 +2,7 @@ import { Plus, PlusCircle } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 import QuizCard from "./QuizCard";
+import Link from "next/link";
 
 const Dashboard = () => {
   const project = [
@@ -29,10 +30,13 @@ const Dashboard = () => {
           </h4>
         </div>
         <div className="flex items-center gap-4">
-          <Button className=" bg-gradient-to-b from-[#4382BE] to-[#45B4A6] px-8 py-5 tracking-wide rounded-full cursor-pointer  flex items-center gap-x-2 hover:bg-[#366861] transition-all duration-400 ">
-            <Plus size={32} />
-            Add Quiz
-          </Button>
+          <Link href="/dashboard/create-quiz">
+            <Button className=" bg-gradient-to-b from-[#4382BE] to-[#45B4A6] px-8 py-5 tracking-wide rounded-full cursor-pointer  flex items-center gap-x-2 hover:bg-[#366861] transition-all duration-400 ">
+              <Plus size={32} />
+              Create Quiz
+            </Button>
+          </Link>
+
           <Button
             variant="outline"
             className="border-[#45B4A6] hidden lg:block text-[#436964] hover:text-[#308579] transition-all duration-400 cursor-pointer"
