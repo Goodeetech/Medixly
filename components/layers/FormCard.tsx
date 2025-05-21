@@ -20,7 +20,15 @@ import {
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
 
-const FormCard = () => {
+interface FormCardProps {
+  onHandleInputChange: (field: string, value: string) => void;
+  GoToNext: () => void;
+}
+
+const FormCard: React.FC<FormCardProps> = ({
+  onHandleInputChange,
+  GoToNext,
+}) => {
   return (
     <div className="bg-white shadow-2xl text-gray-800 p-6 rounded-lg flex flex-col gap-6">
       <div className="flex flex-col gap-3">
@@ -31,6 +39,7 @@ const FormCard = () => {
         <Input
           placeholder="Give your quiz a name"
           className="placeholder:text-sm border border-gray-400"
+          onChange={(e) => onHandleInputChange("QuizTitle", e.target.value)}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -43,6 +52,9 @@ const FormCard = () => {
         <Textarea
           placeholder="e.g. Test your speed on how drugs move through the body — absorption to elimination. Built for fast recall!"
           className="placeholder:text-sm  border border-gray-400 h-[100px]"
+          onChange={(e) =>
+            onHandleInputChange("QuizDescription", e.target.value)
+          }
         />
       </div>
       <div className="flex flex-col gap-3 w-full">
@@ -53,7 +65,9 @@ const FormCard = () => {
           </label>
         </div>
 
-        <Select>
+        <Select
+          onValueChange={(value) => onHandleInputChange("Subject", value)}
+        >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select Subject" />
           </SelectTrigger>
@@ -75,7 +89,11 @@ const FormCard = () => {
           <Settings size={20} color="#1b7e71" />
           <label className="text-md font-semibold">Difficulty Level</label>
         </div>
-        <Select>
+        <Select
+          onValueChange={(value) =>
+            onHandleInputChange("DifficultyLevel", value)
+          }
+        >
           <SelectTrigger className=" w-full">
             <SelectValue placeholder="Select Level" />
           </SelectTrigger>
@@ -95,7 +113,9 @@ const FormCard = () => {
           <Timer size={20} color="#1b7e71" />
           <label className="text-md font-semibold">Time Limit</label>
         </div>
-        <Select>
+        <Select
+          onValueChange={(value) => onHandleInputChange("TimeLimit", value)}
+        >
           <SelectTrigger className=" w-full">
             <SelectValue placeholder="Select Duration" />
           </SelectTrigger>
@@ -108,7 +128,9 @@ const FormCard = () => {
         </Select>
       </div>
       <div className="flex justify-end ">
-        <Button className="cursor-pointer">Generate Quiz</Button>
+        <Button className="cursor-pointer" onClick={GoToNext}>
+          Generate Quiz
+        </Button>
       </div>
     </div>
   );
