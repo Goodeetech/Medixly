@@ -22,7 +22,7 @@ import { Button } from "../ui/button";
 
 const FormCard = () => {
   return (
-    <div className="bg-white text-gray-800 p-6 rounded-lg flex flex-col gap-6">
+    <div className="bg-white shadow-2xl text-gray-800 p-6 rounded-lg flex flex-col gap-6">
       <div className="flex flex-col gap-3">
         <div className="flex gap-2 items-center">
           <CheckCircle size={20} color="#1b7e71" />
