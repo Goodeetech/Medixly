@@ -91,8 +91,9 @@ const AppSidebar = () => {
                 {sidebarItems.map((item) => (
                   <SidebarMenuItem
                     key={item.name}
-                    className={`hover:text-gray-800 text-gray-400 transition-all duration-600  px-2 z-10  rounded-lg relative  ${
-                      pathname.startsWith(item.path) && "bg-gray-100"
+                    className={`hover:text-gray-800 text-gray-400 transition-all duration-400  px-2 z-10  rounded-lg relative  ${
+                      pathname.startsWith(item.path) &&
+                      "bg-gray-100 font-semibold"
                     }`}
                   >
                     <div
