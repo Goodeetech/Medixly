@@ -35,7 +35,11 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
     }
   };
 
-  return <div>QuizCart</div>;
+  return (
+    <div>
+      <div></div>
+    </div>
+  );
 };
 
 export default QuizCart;
