@@ -100,7 +100,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
             </div>
             <div>
               <div className="md:px-4 mx-8 my-2 bg-[#34363b] rounded-lg text-gray-200 shadow-2xl flex gap-10 items-center justify-center py-4 ">
-                <div className="lg:flex hidden justify-center items-center   shadow-xl bg-[#1f2020] rounded">
+                <div className="lg:flex hidden justify-center items-center   shadow-xl bg-[#1f2020] rounded ">
                   <Image
                     src={"/quizimage.png"}
                     alt="quiz"
