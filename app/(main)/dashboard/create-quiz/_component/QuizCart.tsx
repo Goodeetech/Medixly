@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import {
   ArrowRight,
+  Download,
   Heart,
   Loader2Icon,
   Settings,
@@ -98,13 +99,13 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
               </div>
             </div>
             <div>
-              <div className="px-4 my-2 bg-[#34363b] rounded-lg text-gray-200 shadow-2xl flex gap-10 items-center  py-4">
-                <div className="flex justify-center items-center h-full shadow-xl bg-[#1f2020] rounded">
+              <div className="md:px-4 mx-8 my-2 bg-[#34363b] rounded-lg text-gray-200 shadow-2xl flex gap-10 items-center justify-center py-4 ">
+                <div className="lg:flex hidden justify-center items-center   shadow-xl bg-[#1f2020] rounded">
                   <Image
                     src={"/quizimage.png"}
                     alt="quiz"
-                    height={200}
-                    width={200}
+                    height={250}
+                    width={250}
                     className="h-full"
                   />
                 </div>
@@ -116,13 +117,14 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
                     {formData?.QuizDescription}
                   </h5>
 
-                  <div className="flex mt-6 gap-2 items-center ">
+                  <div className="flex mt-6 gap-2 items-center">
                     {/* <div className=" rounded-full bg-amber-200 h-8 w-8 "></div> */}
                     <Image
                       src={formData?.imageUrl || "/quizimage.png"}
                       alt="imagee"
                       height={20}
                       width={20}
+                      className=""
                     />
                     <div className="flex flex-col ">
                       <h3 className="text-xs font-extralight">Created by</h3>
@@ -150,7 +152,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
                     </div>
                   </div>
                   <div className="mt-6 flex items-center gap-6">
-                    <Button className="!px-8 !py-2 tracking-wider">
+                    <Button className="!px-8 cursor-pointer !py-2 tracking-wider">
                       Start Quiz <ArrowRight size={32} />
                     </Button>
                     <div className="p-2 rounded-full outline-gray-400 outline flex items-center ">
@@ -159,6 +161,12 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
                     <div className="p-2 rounded-full outline-gray-400 outline flex items-center ">
                       <Heart size={16} />
                     </div>
+                    <Button
+                      variant="outline"
+                      className="bg-[#34363b] cursor-pointer tracking-wide font-medium"
+                    >
+                      <Download color="#308579" /> save
+                    </Button>
                   </div>
                 </div>
               </div>
