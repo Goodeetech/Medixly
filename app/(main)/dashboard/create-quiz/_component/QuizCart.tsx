@@ -19,9 +19,11 @@ import Link from "next/link";
 
 interface QuizCartProps {
   formData: any; // Replace 'any' with the actual type if known, e.g., { question: string; answer: string }
+  step: number;
+  GoToNext: () => void;
 }
 
-const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
+const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
   const [questionList, setQuestionList] = React.useState<any[]>([]); // Replace 'any' with the actual type if known
   const [loading, setLoading] = React.useState(false);
   const hasFetchedRef = useRef(false);
@@ -162,14 +164,14 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData }) => {
                     <div className="p-2 rounded-full outline-gray-400 outline flex items-center ">
                       <Heart size={16} />
                     </div>
-                    <Link href={"/dashboard/create-quiz/save-quiz"}>
-                      <Button
-                        variant="outline"
-                        className="bg-[#34363b] cursor-pointer tracking-wide font-medium"
-                      >
-                        <Download color="#308579" /> save
-                      </Button>
-                    </Link>
+
+                    <Button
+                      variant="outline"
+                      className="bg-[#34363b] cursor-pointer tracking-wide font-medium"
+                      onClick={GoToNext}
+                    >
+                      <Download color="#308579" /> save
+                    </Button>
                   </div>
                 </div>
               </div>

@@ -1,11 +1,12 @@
 "use client";
 import FormCard from "@/components/layers/FormCard";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import QuizCard from "./_component/QuizCart";
+import SaveQuiz from "./_component/SaveQuiz";
 
 const CreateQuiz = () => {
   type FormDataType = {
@@ -76,8 +77,14 @@ const CreateQuiz = () => {
             onHandleInputChange={onHandleInputChange}
             GoToNext={GoToNext}
           />
+        ) : step == 2 ? (
+          <QuizCard
+            formData={formData}
+            step={step}
+            GoToNext={() => setStep(3)}
+          />
         ) : (
-          <QuizCard formData={formData} />
+          <SaveQuiz />
         )}
       </div>
     </div>
