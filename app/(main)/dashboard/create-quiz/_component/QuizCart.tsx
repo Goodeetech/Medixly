@@ -16,6 +16,10 @@ import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
+import { supabase } from "@/services/SupabaseClient";
+import { useUserDetails } from "@/app/(main)/provider";
+import { toast } from "sonner";
 
 interface QuizCartProps {
   formData: any; // Replace 'any' with the actual type if known, e.g., { question: string; answer: string }
@@ -26,35 +30,78 @@ interface QuizCartProps {
 const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
   const [questionList, setQuestionList] = React.useState<any[]>([]); // Replace 'any' with the actual type if known
   const [loading, setLoading] = React.useState(false);
+  const [loadingSave, setLoadingSave] = React.useState(false);
   const hasFetchedRef = useRef(false);
-  const { user } = useUser();
+  const uuidRef = useRef<string>(uuidv4());
+  const { userDetails } = useUserDetails();
+  console.log("User", userDetails);
+
   useEffect(() => {
     if (formData && !hasFetchedRef.current) {
       hasFetchedRef.current = true;
-      // GenerateQuiz();
+      GenerateQuiz();
     }
   }, []);
 
   const GenerateQuiz = async () => {
     setLoading(true);
-    const result = await axios.post("/api/ai-model", { ...formData });
-    let content = result.data.content;
-
-    const jsonMatch = content.match(/```json([\s\S]*?)```/);
-
-    if (!jsonMatch || !jsonMatch[1]) {
-      throw new Error("Could not extract JSON block from AI response");
-    }
-
     try {
-      const parsedQuestions = JSON.parse(jsonMatch[1].trim());
-      console.log(parsedQuestions);
+      const result = await axios.post("/api/ai-model", { ...formData });
+
+      let content = result.data.content;
+
+      // If the content is already a JSON string, parse it directly
+      let parsedQuestions;
+      try {
+        parsedQuestions = JSON.parse(content);
+      } catch (innerError) {
+        // If content isn't directly parseable, try extracting a JSON array
+        const jsonMatch = content.match(/\[\s*{[\s\S]*}\s*\]/);
+        if (jsonMatch) {
+          parsedQuestions = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error(
+            "Could not extract a valid JSON array from AI response"
+          );
+        }
+      }
+
       setQuestionList(parsedQuestions);
-      setLoading(false);
-      // setQuestionList(parsedQuestions););
     } catch (error) {
-      console.error("Failed to parse content", error);
-      throw new Error("Invalid JSON format returned from AI");
+      console.error("Quiz generation failed:", error);
+      alert("An error occurred while generating the quiz. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      setLoadingSave(true);
+
+      const { data, error } = await supabase.from("Quiz").insert([
+        {
+          ...formData,
+          questionList,
+          userEmail: userDetails?.email,
+          Quiz_id: uuidRef.current,
+        },
+      ]);
+
+      if (error) {
+        console.error("Error saving quiz:", error);
+        alert("Something went wrong while saving your quiz. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      toast("🎉 Quiz saved successfully!");
+      GoToNext();
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      toast("An unexpected error occurred while saving the quiz.");
+    } finally {
+      setLoadingSave(false);
     }
   };
 
@@ -131,7 +178,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                     />
                     <div className="flex flex-col ">
                       <h3 className="text-xs font-extralight">Created by</h3>
-                      <h2 className="text-xs">{user?.fullName}</h2>
+                      <h2 className="text-xs">{userDetails?.name}</h2>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 ">
@@ -168,9 +215,12 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                     <Button
                       variant="outline"
                       className="bg-[#34363b] cursor-pointer tracking-wide font-medium"
-                      onClick={GoToNext}
+                      onClick={handleSave}
+                      disabled={loadingSave}
                     >
-                      <Download color="#308579" /> save
+                      <Download color="#308579" />
+                      {loadingSave && <Loader2Icon className="animate-spin" />}
+                      save
                     </Button>
                   </div>
                 </div>
