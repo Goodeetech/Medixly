@@ -84,7 +84,7 @@ const CreateQuiz = () => {
             GoToNext={() => setStep(3)}
           />
         ) : (
-          <SaveQuiz />
+          <SaveQuiz formData={formData} />
         )}
       </div>
     </div>
