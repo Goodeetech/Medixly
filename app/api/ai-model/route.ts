@@ -6,12 +6,13 @@ export async function POST(req: Request) {
   try {
     const { QuizTitle, QuizDescription, DifficultyLevel, timeLimit, Subject } =
       await req.json();
-
+    const seed = Math.floor(Math.random() * 100000);
     const FinalPrompt = QuizPrompt.replace("{{quizTitle}}", QuizTitle)
       .replace("{{quizDescription}}", QuizDescription)
       .replace("{{difficulty}}", DifficultyLevel)
       .replace("{{timeLimit}}", timeLimit)
-      .replace("{{subject}}", Subject);
+      .replace("{{subject}}", Subject)
+      .replace("{{seed}}", seed.toString());
 
     const openai = new OpenAI({
       baseURL: "https://openrouter.ai/api/v1",

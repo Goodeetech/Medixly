@@ -20,7 +20,7 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/SupabaseClient";
 import { useUserDetails } from "@/app/(main)/provider";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface QuizCartProps {
   formData: any; // Replace 'any' with the actual type if known, e.g., { question: string; answer: string }
@@ -69,11 +69,11 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
       }
 
       setQuestionList(parsedQuestions);
+      setLoading(false);
     } catch (error) {
       console.error("Quiz generation failed:", error);
       alert("An error occurred while generating the quiz. Please try again.");
-    } finally {
-      setLoading(false);
+      router.push("/dashboard/create-quiz");
     }
   };
 
