@@ -26,7 +26,7 @@ import Link from "next/link";
 
 const AppSidebar = () => {
   const pathname = usePathname();
-  console.log(pathname);
+
   const sidebarItems = [
     {
       name: "Dashboard",

@@ -23,7 +23,6 @@ import { redirect, useRouter } from "next/navigation";
 const NavBar = () => {
   const { user, isLoaded, isSignedIn } = useUser();
   const router = useRouter();
-  console.log(user?.imageUrl);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
