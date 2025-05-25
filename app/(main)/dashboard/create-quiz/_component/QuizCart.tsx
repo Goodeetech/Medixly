@@ -77,7 +77,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (): Promise<boolean> => {
     try {
       setLoadingSave(true);
 
@@ -94,26 +94,30 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
         console.error("Error saving quiz:", error);
         alert("Something went wrong while saving your quiz. Please try again.");
         setLoading(false);
-        return;
+        return false;
       }
 
       toast("🎉 Quiz saved successfully!");
+      return true;
     } catch (err) {
       console.error("Unexpected error:", err);
       toast("An unexpected error occurred while saving the quiz.");
+      return false;
     } finally {
       setLoadingSave(false);
     }
   };
 
-  const handleSaveQuiz = () => {
-    handleSave();
-    GoToNext();
+  const handleSaveQuiz = async () => {
+    const success = await handleSave();
+    if (success) GoToNext();
   };
 
-  const handleStartQuiz = () => {
-    handleSave();
-    router.push(`/dashboard/quiz/${uuidRef.current}`);
+  const handleStartQuiz = async () => {
+    const success = await handleSave();
+    if (success) {
+      router.push(`/dashboard/quiz/${uuidRef.current}`);
+    }
   };
 
   return (

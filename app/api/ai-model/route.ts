@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     });
 
     const completion = await openai.chat.completions.create({
-      model: "deepseek/deepseek-chat:free",
+      model: "meta-llama/llama-4-maverick:free",
       messages: [{ role: "user", content: FinalPrompt }],
     });
     console.log(completion.choices[0].message);
