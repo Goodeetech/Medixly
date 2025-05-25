@@ -25,6 +25,15 @@ Your task is to generate a high-quality, well-structured set of quiz questions b
 7. Respond only with a valid JSON array. Do not add any extra text before or after.
 8. Ensure all questions are fresh, creative, and never repeated—even if the prompt looks the same.
 9. You must not reuse any phrasing or question you’ve previously generated, even under similar prompts.
+10. Ensure the correct answer matches exactly one of the 4 options listed for each question.
+11. The **answer must exactly match one of the options provided**.
+12. Add a brief explanation for each correct answer that is medically accurate.
+
+Self-Critique Step:
+- Before finalizing your output, double-check each question.
+- Confirm the correct answer is accurate and clearly part of the options.
+- Ensure medical accuracy using textbook knowledge or clinical standards.
+- Fix or discard any question that fails this check.
 
 📦 Format:
 Return ONLY a valid JSON array of questions, no markdown, no extra formatting. Each item must have the following structure:

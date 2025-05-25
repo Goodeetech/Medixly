@@ -2,11 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { QuizDetailContext } from "@/context/QuizDetailContext";
+import { supabase } from "@/services/SupabaseClient";
+import { LoaderIcon } from "lucide-react";
+import { useParams } from "next/navigation";
 import React from "react";
 
 const StartQuiz = () => {
+  const { id } = useParams();
   const { quizDetails } = React.useContext(QuizDetailContext);
+  console.log("id", id);
   const questions = quizDetails?.questionList || [];
+  const [loading, setloading] = React.useState(false);
 
   const [quizNumber, setQuizNumber] = React.useState(0);
 
@@ -93,15 +99,18 @@ const StartQuiz = () => {
             );
           })}
 
-          <Button
-            onClick={() => {
-              setQuizNumber(0);
-              setSelectedAnswers(questions.map(() => null));
-            }}
-            className="mt-6"
-          >
-            Restart Quiz
-          </Button>
+          <div className="flex justify-between items-center mt-4">
+            <Button
+              onClick={() => {
+                setQuizNumber(0);
+                setSelectedAnswers(questions.map(() => null));
+              }}
+              className=""
+            >
+              Restart Quiz
+            </Button>
+            <Button>Dashboard</Button>
+          </div>
         </div>
       ) : (
         <div>
@@ -140,11 +149,50 @@ const StartQuiz = () => {
               Back
             </Button>
             <Button
-              onClick={() =>
-                setQuizNumber((prev) => Math.min(questions.length, prev + 1))
-              }
+              onClick={async () => {
+                if (quizNumber === questions.length - 1) {
+                  // Calculate score (if needed)
+                  const score = questions.reduce(
+                    (acc: number, question: any, index: number) => {
+                      if (
+                        selectedAnswers[index] !== null &&
+                        question.options[selectedAnswers[index]!] ===
+                          question.answer
+                      ) {
+                        return acc + 1;
+                      }
+                      return acc;
+                    },
+                    0
+                  );
+                  setloading(true);
+
+                  // Update quiz in Supabase
+                  const { data, error } = await supabase
+                    .from("Quiz")
+                    .update({
+                      status: "completed",
+                      score,
+                      completedAt: new Date().toISOString(), // optional
+                    })
+                    .eq("Quiz_id", id) // use the actual quiz ID here
+                    .select();
+
+                  if (error) {
+                    console.error("Failed to update quiz:", error.message);
+                    return;
+                  }
+
+                  // Move to summary screen
+                  setQuizNumber((prev) => prev + 1);
+                  setloading(false);
+                } else {
+                  setQuizNumber((prev) => Math.min(questions.length, prev + 1));
+                }
+              }}
               disabled={selectedAnswers[quizNumber] === null}
             >
+              {loading ? <LoaderIcon className="animate-spin" /> : ""}
               {quizNumber === questions.length - 1 ? "Finish" : "Next"}
             </Button>
           </div>
