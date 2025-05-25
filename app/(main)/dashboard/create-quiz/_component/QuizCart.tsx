@@ -20,6 +20,7 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/SupabaseClient";
 import { useUserDetails } from "@/app/(main)/provider";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface QuizCartProps {
   formData: any; // Replace 'any' with the actual type if known, e.g., { question: string; answer: string }
@@ -35,6 +36,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
   const uuidRef = useRef<string>(uuidv4());
   const { userDetails } = useUserDetails();
   console.log("User", userDetails);
+  const router = useRouter();
 
   useEffect(() => {
     if (formData && !hasFetchedRef.current) {
@@ -96,13 +98,22 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
       }
 
       toast("🎉 Quiz saved successfully!");
-      GoToNext();
     } catch (err) {
       console.error("Unexpected error:", err);
       toast("An unexpected error occurred while saving the quiz.");
     } finally {
       setLoadingSave(false);
     }
+  };
+
+  const handleSaveQuiz = () => {
+    handleSave();
+    GoToNext();
+  };
+
+  const handleStartQuiz = () => {
+    handleSave();
+    router.push(`/dashboard/quiz/${uuidRef.current}`);
   };
 
   return (
@@ -202,7 +213,12 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                     </div>
                   </div>
                   <div className="mt-6 flex items-center gap-6">
-                    <Button className="!px-8 cursor-pointer !py-2 tracking-wider">
+                    <Button
+                      className="!px-8 cursor-pointer !py-2 tracking-wider"
+                      disabled={loadingSave}
+                      onClick={handleStartQuiz}
+                    >
+                      {loadingSave && <Loader2Icon className="animate-spin" />}
                       Start Quiz <ArrowRight size={32} />
                     </Button>
                     <div className="p-2 rounded-full outline-gray-400 outline flex items-center ">
@@ -215,7 +231,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                     <Button
                       variant="outline"
                       className="bg-[#34363b] cursor-pointer tracking-wide font-medium"
-                      onClick={handleSave}
+                      onClick={handleSaveQuiz}
                       disabled={loadingSave}
                     >
                       <Download color="#308579" />
