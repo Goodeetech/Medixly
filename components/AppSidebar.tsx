@@ -74,7 +74,7 @@ const AppSidebar = () => {
 
   return (
     <div>
-      <Sidebar>
+      <Sidebar collapsible="icon">
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel className="my-4 outline-none">
