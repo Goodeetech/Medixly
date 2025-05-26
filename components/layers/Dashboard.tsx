@@ -1,12 +1,23 @@
-import { Plus, PlusCircle } from "lucide-react";
-import React from "react";
+"use client";
+import { LoaderCircle, Plus, PlusCircle, PlusIcon } from "lucide-react";
+import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import QuizCard from "./QuizCard";
 import Link from "next/link";
 import { Chart } from "./Chart";
 import { ChartPie } from "./PieChart";
+import { supabase } from "@/services/SupabaseClient";
+import { QuizDetailContext } from "@/context/QuizDetailContext";
+import { useUser } from "@clerk/nextjs";
+import moment from "moment";
 
 const Dashboard = () => {
+  const [loading, setLoading] = React.useState(true);
+  const [QuizData, setQuizData] = React.useState<any>([]);
+  const { user } = useUser();
+
+  console.log("Quiz Data", QuizData);
+
   const project = [
     {
       title: "Total Quizzes",
@@ -21,6 +32,35 @@ const Dashboard = () => {
       value: 24,
     },
   ];
+
+  useEffect(() => {
+    if (user) {
+      GetQuiz();
+    }
+  }, [user]);
+
+  const GetQuiz = async () => {
+    setLoading(true);
+    try {
+      const { data: Quiz, error } = await supabase
+        .from("Quiz")
+        .select("created_at, Quiz_id, QuizTitle")
+        .eq("userEmail", user?.emailAddresses[0]?.emailAddress)
+        .or("status.is.null,status.neq.completed");
+
+      if (error) {
+        console.error("Error fetching quiz:", error);
+        setQuizData([]); // clear on error
+      } else {
+        setQuizData(Quiz || []);
+      }
+    } catch (error) {
+      console.error("Unexpected error fetching quiz:", error);
+      setQuizData([]); // clear on catch error too
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-gray-100 my-4 mx-6 py-6 px-4 rounded-lg">
@@ -60,13 +100,49 @@ const Dashboard = () => {
         />
         <QuizCard title="Pending Quizzes" value={2} subtext="On Discuss" />
       </div>
-      <div className="grid grid-cols-2 mt-4">
+      <div className="grid lg:grid-cols-3  grid-cols-1 mt-4">
         <div>
-          {" "}
           <Chart />
         </div>
         <div className=" p-6">
           <ChartPie />
+        </div>
+        <div className="bg-white  rounded-lg shadow-lg p-6 font-semibold ">
+          <div className="flex items-center  justify-between">
+            <h2>Quiz</h2>
+            <Button
+              variant="outline"
+              className="flex gap-2 px-4 rounded-full border-[#45B4A6] text-[#289f8f] hover:text-[#308579] transition-all duration-400"
+            >
+              <PlusIcon color="#289f8f" /> <h2>New</h2>
+            </Button>
+          </div>
+          {loading ? (
+            <div className="flex justify-center items-center h-full">
+              <LoaderCircle
+                color="#289f8f"
+                className="animate-spin h-10 w-10"
+              />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-6 mt-4">
+              {QuizData.map((quiz: any, index: number) => (
+                <Link
+                  href={`/dashboard/quiz/${quiz?.Quiz_id}`}
+                  key={index}
+                  className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
+                >
+                  <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
+                  <div>
+                    <h3 className="text-sm font-medium">{quiz?.QuizTitle}</h3>
+                    <p className="font-extralight text-xs">
+                      Created: {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

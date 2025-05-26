@@ -57,11 +57,11 @@ export function ChartPie() {
   }, []);
 
   return (
-    <Card className="flex flex-col border-none shadow-none">
+    <Card className="flex flex-col  border-none shadow-none">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px] border-none outline-none"
+          className="mx-auto aspect-square w-full max-h-[200px] border-none outline-none"
         >
           <PieChart>
             <ChartTooltip
@@ -73,7 +73,7 @@ export function ChartPie() {
               dataKey="visitors"
               nameKey="browser"
               innerRadius={60}
-              strokeWidth={5}
+              strokeWidth={9}
             >
               {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.fill} />
