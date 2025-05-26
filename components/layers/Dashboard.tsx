@@ -3,6 +3,8 @@ import React from "react";
 import { Button } from "../ui/button";
 import QuizCard from "./QuizCard";
 import Link from "next/link";
+import { Chart } from "./Chart";
+import { ChartPie } from "./PieChart";
 
 const Dashboard = () => {
   const project = [
@@ -57,6 +59,15 @@ const Dashboard = () => {
           subtext="increased from last month"
         />
         <QuizCard title="Pending Quizzes" value={2} subtext="On Discuss" />
+      </div>
+      <div className="grid grid-cols-2 mt-4">
+        <div>
+          {" "}
+          <Chart />
+        </div>
+        <div className=" p-6">
+          <ChartPie />
+        </div>
       </div>
     </div>
   );
