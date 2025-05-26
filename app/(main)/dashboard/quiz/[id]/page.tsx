@@ -72,8 +72,8 @@ const StartQuiz = () => {
     <div className="min-h-screen bg-gradient-to-tr py-10 px-4">
       {loading ? (
         <div className="flex flex-col items-center justify-center h-screen">
-          <Loader2Icon className="animate-spin text-yellow-600 h-12 w-12" />
-          <p className="text-center text-yellow-800 mt-4 text-base font-medium">
+          <Loader2Icon className="animate-spin text-primary h-12 w-12" />
+          <p className="text-center text-primary mt-4 text-base font-medium">
             Loading quiz details...
           </p>
         </div>

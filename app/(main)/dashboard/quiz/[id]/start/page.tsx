@@ -3,12 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { QuizDetailContext } from "@/context/QuizDetailContext";
 import { supabase } from "@/services/SupabaseClient";
-import { LoaderIcon } from "lucide-react";
-import { useParams } from "next/navigation";
+import { Check, CheckCheckIcon, LoaderIcon } from "lucide-react";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
 const StartQuiz = () => {
   const { id } = useParams();
+  const router = useRouter();
   const { quizDetails } = React.useContext(QuizDetailContext);
   console.log("id", id);
   const questions = quizDetails?.questionList || [];
@@ -50,7 +52,12 @@ const StartQuiz = () => {
   return (
     <div className="py-16 px-14 max-w-3xl mx-auto">
       {!questions.length ? (
-        <p>No quiz data available.</p>
+        <div>
+          <p>No quiz data available.</p>
+          <Button onClick={() => router.back()} className="mt-4">
+            Back
+          </Button>
+        </div>
       ) : isLastQuestion ? (
         <div>
           <h1 className="text-3xl font-bold mb-6 text-center">Quiz Summary</h1>
@@ -105,11 +112,13 @@ const StartQuiz = () => {
                 setQuizNumber(0);
                 setSelectedAnswers(questions.map(() => null));
               }}
-              className=""
+              className="cursor-pointer"
             >
               Restart Quiz
             </Button>
-            <Button>Dashboard</Button>
+            <Link href="/dashboard">
+              <Button className="cursor-pointer">Dashboard</Button>
+            </Link>
           </div>
         </div>
       ) : (
@@ -125,17 +134,22 @@ const StartQuiz = () => {
                 <button
                   key={index}
                   onClick={() => selectOption(index)}
-                  className={`flex items-center gap-4 border-2 rounded-lg py-4 px-4 font-semibold transition-colors
+                  className={`flex items-center justify-between gap-4 border-2 rounded-lg py-4 px-4 font-semibold transition-colors
                     ${
                       isSelected
                         ? "border-[#2e877c] bg-[#daf5f1]"
                         : "border-gray-300 hover:border-[#2e877c]"
                     }`}
                 >
-                  <span className="text-lg">
-                    {String.fromCharCode(65 + index)}.
-                  </span>
-                  <span>{option}</span>
+                  <div className="flex items-center gap-4">
+                    {" "}
+                    <h2
+                      className={`text-lg  inline-flex items-center justify-center`}
+                    >
+                      {String.fromCharCode(65 + index)}.
+                    </h2>
+                    <div>{option}</div>
+                  </div>
                 </button>
               );
             })}
