@@ -110,12 +110,14 @@ const Dashboard = () => {
         <div className="bg-white  rounded-lg shadow-lg p-6 font-semibold ">
           <div className="flex items-center  justify-between">
             <h2>Quiz</h2>
-            <Button
-              variant="outline"
-              className="flex gap-2 px-4 rounded-full border-[#45B4A6] text-[#289f8f] hover:text-[#308579] transition-all duration-400"
-            >
-              <PlusIcon color="#289f8f" /> <h2>New</h2>
-            </Button>
+            <Link href="/dashboard/create-quiz">
+              <Button
+                variant="outline"
+                className="flex gap-2 cursor-pointer px-4 rounded-full border-[#45B4A6] text-[#289f8f] hover:text-[#308579] transition-all duration-400"
+              >
+                <PlusIcon color="#289f8f" /> <h2>New</h2>
+              </Button>
+            </Link>
           </div>
           {loading ? (
             <div className="flex justify-center items-center h-full">
