@@ -1,5 +1,6 @@
 "use client";
 
+import Timer from "@/components/layers/Timer";
 import { Button } from "@/components/ui/button";
 import { QuizDetailContext } from "@/context/QuizDetailContext";
 import { supabase } from "@/services/SupabaseClient";
@@ -7,6 +8,11 @@ import { Check, CheckCheckIcon, LoaderIcon } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 const StartQuiz = () => {
   const { id } = useParams();
@@ -24,7 +30,7 @@ const StartQuiz = () => {
 
   const currentQuestion = questions[quizNumber];
   const isLastQuestion = quizNumber === questions.length;
-
+  console.log("currentQuestion", questions);
   const selectOption = (optionIndex: number) => {
     setSelectedAnswers((prev) => {
       const updated = [...prev];
@@ -50,7 +56,7 @@ const StartQuiz = () => {
   );
 
   return (
-    <div className="py-16 px-14 max-w-3xl mx-auto">
+    <div className="py-16 px-10 lg:w-full  mx-auto lg:mx-0">
       {!questions.length ? (
         <div>
           <p>No quiz data available.</p>
@@ -122,93 +128,125 @@ const StartQuiz = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <h1 className="text-2xl font-semibold mb-6">
-            {currentQuestion?.question}
-          </h1>
+        // main question display
+        <div className="lg:grid lg:grid-cols-12 w-full gap-10">
+          <div className="lg:col-span-9">
+            <h1 className="text-2xl font-semibold mb-6">
+              {currentQuestion?.question}
+            </h1>
 
-          <div className="flex flex-col gap-4">
-            {currentQuestion?.options.map((option: string, index: number) => {
-              const isSelected = selectedAnswers[quizNumber] === index;
-              return (
-                <button
-                  key={index}
-                  onClick={() => selectOption(index)}
-                  className={`flex items-center justify-between gap-4 border-2 rounded-lg py-4 px-4 font-semibold transition-colors
+            <div className="flex flex-col gap-4">
+              {currentQuestion?.options.map((option: string, index: number) => {
+                const isSelected = selectedAnswers[quizNumber] === index;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => selectOption(index)}
+                    className={`flex items-center justify-between gap-4 border-2 rounded-lg py-4 px-4 font-semibold transition-colors
                     ${
                       isSelected
                         ? "border-[#2e877c] bg-[#daf5f1]"
                         : "border-gray-300 hover:border-[#2e877c]"
                     }`}
-                >
-                  <div className="flex items-center gap-4">
-                    {" "}
-                    <h2
-                      className={`text-lg  inline-flex items-center justify-center`}
-                    >
-                      {String.fromCharCode(65 + index)}.
-                    </h2>
-                    <div>{option}</div>
-                  </div>
-                </button>
-              );
-            })}
+                  >
+                    <div className="flex items-center gap-4">
+                      {" "}
+                      <h2
+                        className={`text-lg  inline-flex items-center justify-center`}
+                      >
+                        {String.fromCharCode(65 + index)}.
+                      </h2>
+                      <div>{option}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-between mt-8">
+              <Button
+                disabled={quizNumber === 0}
+                onClick={() => setQuizNumber((prev) => Math.max(0, prev - 1))}
+              >
+                Back
+              </Button>
+              <Button
+                onClick={async () => {
+                  if (quizNumber === questions.length - 1) {
+                    // Calculate score (if needed)
+                    const score = questions.reduce(
+                      (acc: number, question: any, index: number) => {
+                        if (
+                          selectedAnswers[index] !== null &&
+                          question.options[selectedAnswers[index]!] ===
+                            question.answer
+                        ) {
+                          return acc + 1;
+                        }
+                        return acc;
+                      },
+                      0
+                    );
+                    setloading(true);
+
+                    // Update quiz in Supabase
+                    const { data, error } = await supabase
+                      .from("Quiz")
+                      .update({
+                        status: "completed",
+                        score,
+                        completedAt: new Date().toISOString(), // optional
+                      })
+                      .eq("Quiz_id", id) // use the actual quiz ID here
+                      .select();
+
+                    if (error) {
+                      console.error("Failed to update quiz:", error.message);
+                      return;
+                    }
+
+                    // Move to summary screen
+                    setQuizNumber((prev) => prev + 1);
+                    setloading(false);
+                  } else {
+                    setQuizNumber((prev) =>
+                      Math.min(questions.length, prev + 1)
+                    );
+                  }
+                }}
+                disabled={selectedAnswers[quizNumber] === null}
+              >
+                {loading ? <LoaderIcon className="animate-spin" /> : ""}
+                {quizNumber === questions.length - 1 ? "Finish" : "Next"}
+              </Button>
+            </div>
           </div>
 
-          <div className="flex justify-between mt-8">
-            <Button
-              disabled={quizNumber === 0}
-              onClick={() => setQuizNumber((prev) => Math.max(0, prev - 1))}
-            >
-              Back
-            </Button>
-            <Button
-              onClick={async () => {
-                if (quizNumber === questions.length - 1) {
-                  // Calculate score (if needed)
-                  const score = questions.reduce(
-                    (acc: number, question: any, index: number) => {
-                      if (
-                        selectedAnswers[index] !== null &&
-                        question.options[selectedAnswers[index]!] ===
-                          question.answer
-                      ) {
-                        return acc + 1;
-                      }
-                      return acc;
-                    },
-                    0
-                  );
-                  setloading(true);
-
-                  // Update quiz in Supabase
-                  const { data, error } = await supabase
-                    .from("Quiz")
-                    .update({
-                      status: "completed",
-                      score,
-                      completedAt: new Date().toISOString(), // optional
-                    })
-                    .eq("Quiz_id", id) // use the actual quiz ID here
-                    .select();
-
-                  if (error) {
-                    console.error("Failed to update quiz:", error.message);
-                    return;
-                  }
-
-                  // Move to summary screen
-                  setQuizNumber((prev) => prev + 1);
-                  setloading(false);
-                } else {
-                  setQuizNumber((prev) => Math.min(questions.length, prev + 1));
-                }
-              }}
-              disabled={selectedAnswers[quizNumber] === null}
-            >
-              {loading ? <LoaderIcon className="animate-spin" /> : ""}
-              {quizNumber === questions.length - 1 ? "Finish" : "Next"}
-            </Button>
+          <div className="lg:col-span-3 lg:flex gap-4 flex-col hidden  ">
+            <div>
+              <Timer />
+            </div>
+            <div className="bg-white shadow-2xl p-4">
+              {questions.map((quiz: any, index: number) => (
+                <div
+                  key={index}
+                  className={`${quizNumber >= index && "text-green-300"}`}
+                >
+                  Quiz Number {index}
+                  <div>
+                    <Collapsible>
+                      <CollapsibleTrigger>
+                        Can I use this in my project?
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        Yes. Free to use for personal and commercial projects.
+                        No attribution required.
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
