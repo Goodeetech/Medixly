@@ -4,7 +4,16 @@ import Timer from "@/components/layers/Timer";
 import { Button } from "@/components/ui/button";
 import { QuizDetailContext } from "@/context/QuizDetailContext";
 import { supabase } from "@/services/SupabaseClient";
-import { Check, CheckCheckIcon, LoaderIcon } from "lucide-react";
+import {
+  ArrowBigUp,
+  ArrowUp,
+  ArrowUp01Icon,
+  Check,
+  CheckCheckIcon,
+  ChevronUp,
+  CircleCheck,
+  LoaderIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
@@ -226,26 +235,35 @@ const StartQuiz = () => {
             <div>
               <Timer />
             </div>
-            <div className="bg-white shadow-2xl p-4">
-              {questions.map((quiz: any, index: number) => (
-                <div
-                  key={index}
-                  className={`${quizNumber >= index && "text-green-300"}`}
-                >
-                  Quiz Number {index}
+            <div>
+              <Collapsible className="bg-white shadow-2xl p-4">
+                <CollapsibleTrigger className="flex justify-between items-center gap-10 text-sm">
+                  <div>Quiz Questions List</div>
                   <div>
-                    <Collapsible>
-                      <CollapsibleTrigger>
-                        Can I use this in my project?
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        Yes. Free to use for personal and commercial projects.
-                        No attribution required.
-                      </CollapsibleContent>
-                    </Collapsible>
+                    <ChevronUp color="#2e877c" />
                   </div>
-                </div>
-              ))}
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="flex flex-col gap-2 mt-2">
+                    {questions.map((quiz: any, index: number) => (
+                      <div
+                        key={index}
+                        className={`${
+                          quizNumber >= index &&
+                          "text-green-900 bg-green-100  rounded-lg"
+                        } flex justify-between gap-6 items-center p-2 text-sm`}
+                      >
+                        <h2> Quiz Question {index + 1}</h2>
+                        <div>
+                          {quizNumber >= index && (
+                            <CircleCheck strokeWidth={2} />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
           </div>
         </div>
