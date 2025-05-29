@@ -1,4 +1,4 @@
-const QuizCategory = [
+export const QuizCategory = [
   {
     id: "brain-boosters",
     icon: "🧠",
