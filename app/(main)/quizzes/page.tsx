@@ -5,7 +5,7 @@ import React from "react";
 
 const Quizzes = () => {
   return (
-    <div className="p-16 ">
+    <div className="lg:p-16 px-2 py-4 ">
       <div className="text-center">
         <h1 className="text-3xl tracking-wider bg-gradient-to-b from-[#4382BE] to-[#45B4A6] text-transparent bg-clip-text">
           Quiz Categories
@@ -34,7 +34,7 @@ const Quizzes = () => {
                 <hr className="" />
               </div>
               <div>
-                <div className="py-6 px-8 grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 ">
+                <div className="py-6 lg:px-8  grid lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 ">
                   {item.quizzes.map((it: any, ind: number) => (
                     <div
                       key={ind}
