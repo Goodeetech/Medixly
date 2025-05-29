@@ -443,4 +443,300 @@ export const QuizCategory = [
       },
     ],
   },
+  {
+    id: "surgery-saga",
+    icon: "🩺",
+    title: "Surgery Saga",
+    category: "Surgery",
+    color: "#fbbf24",
+    quizzes: [
+      {
+        id: "pre-op-prep",
+        title: "Pre-Op Prep",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on pre-operative assessments, risk factors, and surgical consent.",
+      },
+      {
+        id: "post-op-protocols",
+        title: "Post-Op Protocols",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on post-operative care, complications, and recovery monitoring.",
+      },
+      {
+        id: "surgical-techniques",
+        title: "Surgical Techniques",
+        questionCount: 10,
+        prompt:
+          "Write 10 MCQs on common surgical procedures, techniques, and indications.",
+      },
+      {
+        id: "emergency-surgery-essentials",
+        title: "Emergency Surgery Essentials",
+        questionCount: 10,
+        prompt:
+          "Create 10 questions on emergency surgical conditions, triage, and management.",
+      },
+    ],
+  },
+  {
+    id: "public-health-puzzle",
+    icon: "🌍",
+    title: "Public Health Puzzle",
+    category: "Public Health + Epidemiology",
+    color: "#60a5fa",
+    quizzes: [
+      {
+        id: "disease-dynamics",
+        title: "Disease Dynamics",
+        questionCount: 10,
+        prompt:
+          "Generate 10 MCQs on disease transmission, outbreak investigation, and control measures.",
+      },
+      {
+        id: "health-policy-points",
+        title: "Health Policy Points",
+        questionCount: 10,
+        prompt:
+          "Write 10 questions testing knowledge of health policies, systems, and global health issues.",
+      },
+      {
+        id: "epidemiology-essentials",
+        title: "Epidemiology Essentials",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on epidemiological study designs, data interpretation, and public health statistics.",
+      },
+      {
+        id: "global-health-gaps",
+        title: "Global Health Gaps",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on global health challenges, initiatives, and sustainable development goals.",
+      },
+    ],
+  },
+  {
+    id: "emergency-excellence",
+    icon: "🚑",
+    title: "Emergency Excellence",
+    category: "Emergency Medicine",
+    color: "#f87171",
+    quizzes: [
+      {
+        id: "trauma-triage",
+        title: "Trauma Triage",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on trauma assessment, triage protocols, and emergency interventions.",
+      },
+      {
+        id: "cardiac-crisis",
+        title: "Cardiac Crisis",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on cardiac emergencies, resuscitation techniques, and drug protocols.",
+      },
+      {
+        id: "toxicology-tactics",
+        title: "Toxicology Tactics",
+        questionCount: 10,
+        prompt:
+          "Write 10 MCQs on toxicological emergencies, antidotes, and management strategies.",
+      },
+      {
+        id: "pediatric-emergencies",
+        title: "Pediatric Emergencies",
+        questionCount: 10,
+        prompt:
+          "Create 10 questions on pediatric emergency conditions, assessment, and treatment.",
+      },
+    ],
+  },
+  {
+    id: "nutrition-nexus",
+    icon: "🥗",
+    title: "Nutrition Nexus",
+    category: "Nutrition + Dietetics",
+    color: "#a3e635",
+    quizzes: [
+      {
+        id: "macronutrient-mastery",
+        title: "Macronutrient Mastery",
+        questionCount: 10,
+        prompt:
+          "Generate 10 MCQs on macronutrients, their functions, dietary sources, and recommended intakes.",
+      },
+      {
+        id: "micronutrient-mysteries",
+        title: "Micronutrient Mysteries",
+        questionCount: 10,
+        prompt:
+          "Write 10 questions testing knowledge of vitamins, minerals, deficiencies, and dietary guidelines.",
+      },
+      {
+        id: "dietary-disorders",
+        title: "Dietary Disorders",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on common dietary disorders, their causes, symptoms, and management.",
+      },
+      {
+        id: "nutrition-in-practice",
+        title: "Nutrition in Practice",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on nutritional assessment, counseling techniques, and public health nutrition.",
+      },
+    ],
+  },
+  {
+    id: "aging-advancements",
+    icon: "👵",
+    title: "Aging Advancements",
+    category: "Geriatrics + Palliative Care",
+    color: "#fbbf24",
+    quizzes: [
+      {
+        id: "geriatric-gems",
+        title: "Geriatric Gems",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on aging physiology, common geriatric syndromes, and management strategies.",
+      },
+      {
+        id: "palliative-principles",
+        title: "Palliative Principles",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on palliative care principles, symptom management, and end-of-life discussions.",
+      },
+      {
+        id: "dementia-dilemmas",
+        title: "Dementia Dilemmas",
+        questionCount: 10,
+        prompt:
+          "Write 10 MCQs on dementia types, diagnostic criteria, and care approaches.",
+      },
+      {
+        id: "elderly-ethics",
+        title: "Elderly Ethics",
+        questionCount: 10,
+        prompt:
+          "Create 10 questions on ethical issues in geriatrics and palliative care decision-making.",
+      },
+    ],
+  },
+  {
+    id: "tech-health",
+    icon: "💻",
+    title: "Tech & Health",
+    category: "Health Informatics + Digital Health",
+    color: "#818cf8",
+    quizzes: [
+      {
+        id: "ehealth-essentials",
+        title: "eHealth Essentials",
+        questionCount: 10,
+        prompt:
+          "Generate 10 MCQs on eHealth technologies, telemedicine, and their applications in healthcare.",
+      },
+      {
+        id: "data-security-dilemmas",
+        title: "Data Security Dilemmas",
+        questionCount: 10,
+        prompt:
+          "Write 10 questions testing knowledge of health data security, privacy laws, and ethical considerations.",
+      },
+      {
+        id: "informatics-insights",
+        title: "Informatics Insights",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on health informatics systems, data management, and clinical decision support.",
+      },
+      {
+        id: "digital-health-innovations",
+        title: "Digital Health Innovations",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on emerging digital health trends, wearable technologies, and their impact on patient care.",
+      },
+    ],
+  },
+  {
+    id: "global-health",
+    icon: "🌍",
+    title: "Global Health",
+    category: "Global Health + Tropical Medicine",
+    color: "#fbbf24",
+    quizzes: [
+      {
+        id: "tropical-treats",
+        title: "Tropical Treats",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on tropical diseases, their epidemiology, and management strategies.",
+      },
+      {
+        id: "global-health-goals",
+        title: "Global Health Goals",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on the Sustainable Development Goals (SDGs) related to health and well-being.",
+      },
+      {
+        id: "epidemiology-explained",
+        title: "Epidemiology Explained",
+        questionCount: 10,
+        prompt:
+          "Write 10 MCQs on global epidemiological trends, disease surveillance, and outbreak response.",
+      },
+      {
+        id: "health-systems-harmony",
+        title: "Health Systems Harmony",
+        questionCount: 10,
+        prompt:
+          "Create 10 questions on global health systems, policies, and international health organizations.",
+      },
+    ],
+  },
+  {
+    id: "sports-science",
+    icon: "🏋️‍♂️",
+    title: "Sports Science",
+    category: "Sports Medicine + Exercise Physiology",
+    color: "#a3e635",
+    quizzes: [
+      {
+        id: "exercise-essentials",
+        title: "Exercise Essentials",
+        questionCount: 10,
+        prompt:
+          "Generate 10 MCQs on exercise physiology, training principles, and health benefits of physical activity.",
+      },
+      {
+        id: "injury-insights",
+        title: "Injury Insights",
+        questionCount: 10,
+        prompt:
+          "Write 10 questions testing knowledge of common sports injuries, prevention strategies, and rehabilitation.",
+      },
+      {
+        id: "nutrition-for-athletes",
+        title: "Nutrition for Athletes",
+        questionCount: 10,
+        prompt:
+          "Create 10 MCQs on sports nutrition, dietary supplements, and hydration strategies for athletes.",
+      },
+      {
+        id: "performance-psychology",
+        title: "Performance Psychology",
+        questionCount: 10,
+        prompt:
+          "Generate 10 questions on psychological aspects of sports performance, motivation, and mental health in athletes.",
+      },
+    ],
+  },
 ];
