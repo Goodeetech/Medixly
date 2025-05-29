@@ -188,7 +188,7 @@ export const QuizCategory = [
     id: "puff-pressure",
     icon: "🫁",
     title: "Puff & Pressure",
-    category: "Respiratory",
+    category: "Respiratory & Pulmonology",
     color: "#60a5fa",
     quizzes: [
       {
