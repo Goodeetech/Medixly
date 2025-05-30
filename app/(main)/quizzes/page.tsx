@@ -86,7 +86,7 @@ const Quizzes = () => {
                             <hr className="" />
                           </div>
                           <div>
-                            <div className="py-6 lg:px-8  grid lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 ">
+                            <div className="py-6  grid lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 ">
                               {item.quizzes.map((it: Quiz, ind: number) => (
                                 <div
                                   key={ind}
