@@ -3,6 +3,7 @@ import DashBoardProvider from "./provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
 import { Toaster } from "sonner";
+import NavBar from "@/components/layers/NavBar";
 
 export default function DashboardLayout({
   children,
@@ -16,6 +17,7 @@ export default function DashboardLayout({
           <AppSidebar />
           <main className="w-full">
             <SidebarTrigger />
+            <NavBar />
             {children}
           </main>
           <Toaster />
