@@ -52,7 +52,7 @@ const Dashboard = () => {
         console.error("Error fetching quiz:", error);
         setQuizData([]); // clear on error
       } else {
-        setQuizData(Quiz || []);
+        setQuizData(Quiz || []); // set to empty array if no data
       }
     } catch (error) {
       console.error("Unexpected error fetching quiz:", error);
@@ -128,7 +128,13 @@ const Dashboard = () => {
             </div>
           ) : (
             <div>
-              {QuizData ? (
+              {!QuizData || QuizData.length === 0 ? (
+                <div className="flex justify-center items-center h-[200px]">
+                  <h2 className="text-sm flex justify-center items-center text-center">
+                    No Existing Quiz.
+                  </h2>
+                </div>
+              ) : (
                 <div className="flex flex-col gap-6 mt-4">
                   {QuizData.map((quiz: any, index: number) => (
                     <Link
@@ -148,10 +154,6 @@ const Dashboard = () => {
                       </div>
                     </Link>
                   ))}
-                </div>
-              ) : (
-                <div className="flex justify-center items-center">
-                  <h2>No Existing Quiz.</h2>
                 </div>
               )}
             </div>
