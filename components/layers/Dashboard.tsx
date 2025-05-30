@@ -127,22 +127,33 @@ const Dashboard = () => {
               />
             </div>
           ) : (
-            <div className="flex flex-col gap-6 mt-4">
-              {QuizData.map((quiz: any, index: number) => (
-                <Link
-                  href={`/dashboard/quiz/${quiz?.Quiz_id}`}
-                  key={index}
-                  className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
-                >
-                  <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
-                  <div>
-                    <h3 className="text-sm font-medium">{quiz?.QuizTitle}</h3>
-                    <p className="font-extralight text-xs">
-                      Created: {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+            <div>
+              {QuizData ? (
+                <div className="flex flex-col gap-6 mt-4">
+                  {QuizData.map((quiz: any, index: number) => (
+                    <Link
+                      href={`/dashboard/quiz/${quiz?.Quiz_id}`}
+                      key={index}
+                      className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
+                    >
+                      <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
+                      <div>
+                        <h3 className="text-sm font-medium">
+                          {quiz?.QuizTitle}
+                        </h3>
+                        <p className="font-extralight text-xs">
+                          Created:{" "}
+                          {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex justify-center items-center">
+                  <h2>No Existing Quiz.</h2>
+                </div>
+              )}
             </div>
           )}
         </div>
