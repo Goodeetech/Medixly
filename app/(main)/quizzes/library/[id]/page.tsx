@@ -80,7 +80,7 @@ const SingleLibraryPage = () => {
   }, [id, singleQuiz]);
 
   return (
-    <div className="px-10 py-4 bg-gray-100 mx-6 ">
+    <div className="px-10 my-4 bg-gray-100 mx-6 rounded-lg ">
       <div className="flex justify-center items-center">
         {loading ? (
           <div className="flex p-2 bg-gray-50 shadow-lg rounded-lg  gap-4 items-center justify-center">
@@ -105,7 +105,7 @@ const SingleLibraryPage = () => {
           <div>
             <div className="flex md:px-6  items-center bg-gray-50  gap-4 justify-between mt-20 md:mt-10">
               <div className="max-w-md">
-                <h1 className="lg:text-3xl md:text-2xl text-xl font-bold">
+                <h1 className="lg:text-2xl md:text-2xl text-xl font-bold">
                   You&apos;re One Step Away from Boosting Your Brainpower
                 </h1>
                 <h3 className="text-sm text-gray-500">
@@ -117,14 +117,14 @@ const SingleLibraryPage = () => {
                 <Image
                   src={"/gemini.png"}
                   alt="gemini"
-                  width={150}
-                  height={150}
+                  width={120}
+                  height={120}
                   className="w-full h-full"
                 />
               </div>
             </div>
             <div>
-              <div className="px-4  md:mx-8 py-4     my-8 mt-8 bg-[#34363b] rounded-lg max-w-xl lg:max-w-full mx-auto text-gray-200 shadow-2xl flex gap-10 items-center justify-center  relative">
+              <div className="px-4  md:mx-8 md:py-2 py-4     my-8 mt-8 bg-[#34363b] rounded-lg max-w-xl lg:max-w-full mx-auto text-gray-200 shadow-2xl flex gap-10 items-center justify-center  relative">
                 <div className="lg:flex hidden justify-center items-center   shadow-xl bg-[#1f2020] rounded ">
                   <Image
                     src={"/quizimage.png"}
