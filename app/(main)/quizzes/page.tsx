@@ -52,7 +52,7 @@ const Quizzes = () => {
   }, [debouncedSearch]);
 
   const GoToQuiz = (id: string) => {
-    router.push(`/dashboard/library/${id}`);
+    router.push(`/quizzes/library/${id}`);
   };
 
   return (
