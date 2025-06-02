@@ -1,8 +1,11 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/useDebounce";
 import { QuizCategory } from "@/lib/QuizLibrary/QuizLib";
+import axios from "axios";
 import { ArrowRight, Search, Timer } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Quizzes = () => {
@@ -21,6 +24,7 @@ const Quizzes = () => {
     questionCount: number;
     prompt: string;
   };
+  const router = useRouter();
 
   const [search, setSearch] = useState(""); // user's real-time input
   const debouncedSearch = useDebounce(search, 500); // debounce it
@@ -46,6 +50,10 @@ const Quizzes = () => {
   useEffect(() => {
     fetchQuizzes();
   }, [debouncedSearch]);
+
+  const GoToQuiz = (id: string) => {
+    router.push(`/dashboard/library/${id}`);
+  };
 
   return (
     <div className="lg:p-16 px-2 py-4 ">
@@ -91,6 +99,7 @@ const Quizzes = () => {
                                 <div
                                   key={ind}
                                   className="group relative px-6 py-5 bg-gradient-to-br from-[#4382BE] to-[#45B4A6] text-white rounded-md shadow-md hover:shadow-lg hover:from-[#325352] hover:to-[#1f3a39] transition-all duration-300 cursor-pointer overflow-hidden"
+                                  onClick={() => GoToQuiz(it.id)}
                                 >
                                   {/* Decorative Arrow on Hover */}
                                   <div className="absolute top-1/2 right-4 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white text-xl group-hover:translate-x-0 ">
@@ -150,6 +159,7 @@ const Quizzes = () => {
                           <div
                             key={ind}
                             className="group relative px-6 py-5 bg-gradient-to-br from-[#4382BE] to-[#45B4A6] text-white rounded-md shadow-md hover:shadow-lg hover:from-[#325352] hover:to-[#1f3a39] transition-all duration-300 cursor-pointer overflow-hidden"
+                            onClick={() => GoToQuiz(it.id)}
                           >
                             {/* Decorative Arrow on Hover */}
                             <div className="absolute top-1/2 right-4 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white text-xl group-hover:translate-x-0 ">
