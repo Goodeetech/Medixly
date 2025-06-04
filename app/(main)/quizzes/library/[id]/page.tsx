@@ -75,7 +75,7 @@ const SingleLibraryPage = () => {
 
   useEffect(() => {
     if (singleQuiz && id) {
-      //   CreateLibraryQuiz();
+      CreateLibraryQuiz();
     }
   }, [id, singleQuiz]);
 
