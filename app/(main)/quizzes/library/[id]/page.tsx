@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { QuizCategory } from "@/lib/QuizLibrary/QuizLib";
 import {
   ArrowRight,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { LibraryQuizContext } from "@/context/LibraryQuizContext";
 
 type Quiz = {
   id: string;
@@ -30,6 +31,8 @@ const SingleLibraryPage = () => {
   const [questionList, setQuestionList] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   console.log("SINGLE Quiz", singleQuiz);
+
+  const { libraryQuiz, setLibraryQuiz } = useContext(LibraryQuizContext);
 
   const getQuiz = () => {
     const allQuizzes = QuizCategory.flatMap(
@@ -59,6 +62,7 @@ const SingleLibraryPage = () => {
         }
       }
       setQuestionList(parsedQuestions);
+      setLibraryQuiz(parsedQuestions);
       setLoading(false);
     } catch (error) {
       console.error("Quiz generation failed:", error);
