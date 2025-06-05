@@ -27,7 +27,7 @@ const StartQuiz = () => {
   const { id } = useParams();
   const router = useRouter();
   const { quizDetails } = React.useContext(QuizDetailContext);
-  console.log("id", id);
+  // console.log("id", id);
   const questions = quizDetails?.questionList || [];
   const [loading, setloading] = React.useState(false);
 

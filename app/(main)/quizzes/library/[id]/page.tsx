@@ -29,7 +29,7 @@ const SingleLibraryPage = () => {
   console.log(id);
   const [singleQuiz, setSingleQuiz] = useState<any | null>(null);
   const [questionList, setQuestionList] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   console.log("SINGLE Quiz", singleQuiz);
 
   const { libraryQuiz, setLibraryQuiz } = useContext(LibraryQuizContext);
@@ -45,14 +45,31 @@ const SingleLibraryPage = () => {
   const CreateLibraryQuiz = async () => {
     try {
       if (!singleQuiz) return;
+
       const result = await axios.post("/api/quiz-library", singleQuiz);
-      let content = result.data.content;
+      console.log("✅ API response:", result.data);
+
+      let content = result.data?.content;
+
+      if (!content) {
+        throw new Error("No content received from API");
+      }
+
+      // 🧼 Step 1: Clean markdown code block wrappers like ```json
+      content = content.replace(/```json|```/g, "").trim();
+
+      console.log("🟡 Cleaned AI content:", content);
+
       let parsedQuestions;
+
       try {
+        // Step 2: Try parsing directly
         parsedQuestions = JSON.parse(content);
       } catch (innerError) {
-        // If content isn't directly parseable, try extracting a JSON array
-        const jsonMatch = content.match(/\[\s*{[\s\S]*}\s*\]/);
+        console.warn("⚠️ Direct JSON.parse failed, trying regex fallback...");
+
+        // Step 3: Try to extract a JSON array using regex
+        const jsonMatch = content.match(/\[\s*{[\s\S]*?}\s*\]/);
         if (jsonMatch) {
           parsedQuestions = JSON.parse(jsonMatch[0]);
         } else {
@@ -61,13 +78,15 @@ const SingleLibraryPage = () => {
           );
         }
       }
+
+      // ✅ Step 4: Save the quiz if parsing was successful
       setQuestionList(parsedQuestions);
       setLibraryQuiz(parsedQuestions);
       setLoading(false);
     } catch (error) {
-      console.error("Quiz generation failed:", error);
+      console.error("❌ Quiz generation failed:", error);
       alert("An error occurred while generating the quiz. Please try again.");
-      router.push("/dashboard/create-quiz");
+      setLoading(false); // Make sure to stop any loading UI
     }
   };
 
@@ -83,11 +102,15 @@ const SingleLibraryPage = () => {
     }
   }, [id, singleQuiz]);
 
+  const handleStartQuiz = () => {
+    router.push(`/quizzes/library/${id}/start`);
+  };
+
   return (
-    <div className="px-10 my-4 bg-gray-100 mx-6 rounded-lg ">
+    <div className="px-10 my-4 py-4 bg-gray-100 mx-6 rounded-lg ">
       <div className="flex justify-center items-center">
         {loading ? (
-          <div className="flex p-2 bg-gray-50 shadow-lg rounded-lg  gap-4 items-center justify-center">
+          <div className="flex py-4 px-2 bg-gray-50 shadow-lg rounded-lg  gap-4 items-center justify-center">
             <div className="">
               <Loader2Icon
                 className="animate-spin "
@@ -166,8 +189,7 @@ const SingleLibraryPage = () => {
                   <div className="mt-6 flex md:flex-row items-center gap-6">
                     <Button
                       className="!px-8 cursor-pointer !py-2 tracking-wider"
-                      //   disabled={loadingSave}
-                      //   onClick={handleStartQuiz}
+                      onClick={handleStartQuiz}
                     >
                       Start Quiz <ArrowRight size={32} />
                     </Button>
