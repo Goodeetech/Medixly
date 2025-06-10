@@ -79,6 +79,11 @@ const FormCard: React.FC<FormCardProps> = ({
             <SelectItem value="Pharmacology">💊 Pharmacology</SelectItem>
             <SelectItem value="Microbiology">🧫 Microbiology</SelectItem>
             <SelectItem value="Public Health">🌍 Public Health</SelectItem>
+            <SelectItem value="Obstetrics and Gynaecology">
+              👩‍🦰 Obstetrics and Gynaecology
+            </SelectItem>
+            <SelectItem value="pediatrics">👶 Pediatrics</SelectItem>
+
             <SelectItem value="Surgery">🔪 Surgery</SelectItem>
             <SelectItem value="Medicine">🩺 Medicine</SelectItem>
           </SelectContent>

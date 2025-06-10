@@ -210,7 +210,7 @@ const StartQuiz = () => {
                     );
                   }
                 }}
-                disabled={selectedAnswers[quizNumber] === null}
+                disabled={selectedAnswers[quizNumber] === null || loading}
               >
                 {loading ? <LoaderIcon className="animate-spin" /> : ""}
                 {quizNumber === questions.length - 1 ? "Finish" : "Next"}
