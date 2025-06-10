@@ -178,7 +178,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                   <h3 className="text-2xl capitalize font-semibold">
                     {formData?.QuizTitle}
                   </h3>
-                  <h5 className="font-light text-xs">
+                  <h5 className="font-light text-xs max-w-md">
                     {formData?.QuizDescription}
                   </h5>
 
