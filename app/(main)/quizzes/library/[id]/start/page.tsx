@@ -141,7 +141,7 @@ const StartQuiz = () => {
         // main question display
         <div className="lg:grid lg:grid-cols-12 w-full gap-10">
           <div className="lg:col-span-9">
-            <h1 className="text-2xl font-semibold mb-6">
+            <h1 className="text-2xl  font-semibold mb-6">
               {currentQuestion?.question}
             </h1>
 
@@ -166,7 +166,7 @@ const StartQuiz = () => {
                       >
                         {String.fromCharCode(65 + index)}.
                       </h2>
-                      <div>{option}</div>
+                      <div className="text-md lg:text-[16px]">{option}</div>
                     </div>
                   </button>
                 );

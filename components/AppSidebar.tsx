@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,6 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   BellRing,
@@ -26,6 +27,13 @@ import Link from "next/link";
 
 const AppSidebar = () => {
   const pathname = usePathname();
+  const { isMobile, openMobile, setOpenMobile } = useSidebar();
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
 
   const sidebarItems = [
     {
@@ -74,7 +82,7 @@ const AppSidebar = () => {
 
   return (
     <div>
-      <Sidebar collapsible="icon">
+      <Sidebar collapsible="icon" variant="sidebar" side="left">
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel className="my-4 outline-none">
@@ -107,7 +115,7 @@ const AppSidebar = () => {
                       asChild
                       // className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
-                      <Link href={item.path}>
+                      <Link href={item.path} onClick={handleLinkClick}>
                         <item.icon color="#3DAEAC" strokeWidth={2} size={64} />
                         <span
                           className={`text-[16px]  px-1   ${

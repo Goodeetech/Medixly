@@ -116,7 +116,7 @@ const StartQuiz = () => {
             <h2 className="text-lg font-bold text-yellow-800 mb-2">
               📘 Instructions
             </h2>
-            <ul className="list-disc list-inside text-[13px] text-yellow-900 space-y-1">
+            <ul className="list-disc list-inside text-[12px] text-yellow-900 space-y-1">
               <li>Answer all questions to the best of your ability.</li>
               <li>Do not refresh or close the tab during the quiz.</li>
               <li>Click “Submit” at the end to get your score.</li>
