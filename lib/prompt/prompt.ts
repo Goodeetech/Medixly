@@ -70,7 +70,8 @@ A quiz has been requested on the topic above. Your job is to turn this request i
 
 ⏱️ Time Limit: Automatically inferred from question count (e.g., 1–1.5 minutes per question)
 
-🎲 Seed: {{seed}}  // Used to introduce variation and freshness even with similar prompts
+
+🎲 Unique Seed: {{seed}}  // Add this dynamically to influence variation
 
 ---
 
@@ -90,11 +91,14 @@ A quiz has been requested on the topic above. Your job is to turn this request i
 6. Make questions **unique and original** — do **not** reuse content from prior prompts.
 7. The **correct answer must match exactly one of the listed options**.
 8. Include a brief medical explanation for each correct answer (aimed at students or junior doctors).
+ 9.Ensure all questions are fresh, creative, and never repeated—even if the prompt looks the same.
+10. You must not reuse any phrasing or question you’ve previously generated, even under similar prompts.
 
 ✅ Final Quality Check:
 - Re-read each question to ensure accuracy and clarity.
 - Confirm the correct answer is medically valid and listed in the options.
 - Double-check spelling, phrasing, and distractor logic.
+
 
 ---
 
