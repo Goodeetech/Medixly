@@ -20,6 +20,7 @@ import {
   Home,
   LogOut,
   Settings,
+  Wallet,
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -70,6 +71,12 @@ const AppSidebar = () => {
       name: "Help / FAQ",
       icon: HelpCircleIcon,
       path: "/help",
+      description: "Get answers to your questions or contact support.",
+    },
+    {
+      name: "Billing",
+      icon: Wallet,
+      path: "/billing",
       description: "Get answers to your questions or contact support.",
     },
     {
