@@ -1,8 +1,32 @@
 import { QuizPrompt } from "@/lib/prompt/prompt";
+import { ratelimit } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
 export async function POST(req: Request) {
+  const ip =
+    req.headers.get("x-forwarded-for") ??
+    req.headers.get("x-real-ip") ??
+    "anonymous";
+
+  const { success, limit, remaining, reset } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return NextResponse.json(
+      {
+        error: "Too many requests. Please wait before trying again.",
+      },
+      {
+        status: 429,
+        headers: {
+          "X-RateLimit-Limit": limit.toString(),
+          "X-RateLimit-Remaining": remaining.toString(),
+          "X-RateLimit-Reset": reset.toString(),
+        },
+      }
+    );
+  }
+
   const { QuizTitle, QuizDescription, DifficultyLevel, timeLimit, Subject } =
     await req.json();
   const seed = Math.floor(Math.random() * 100000);
