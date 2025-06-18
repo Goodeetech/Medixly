@@ -1,6 +1,6 @@
 "use client";
 import { LoaderCircle, Plus, PlusCircle, PlusIcon } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import QuizCard from "./QuizCard";
 import Link from "next/link";
@@ -10,13 +10,25 @@ import { supabase } from "@/services/SupabaseClient";
 import { QuizDetailContext } from "@/context/QuizDetailContext";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
+import { QuizzesPerDay } from "@/lib/prompt/QuizPerDay/quizzes";
 
 const Dashboard = () => {
   const [loading, setLoading] = React.useState(true);
   const [QuizData, setQuizData] = React.useState<any>([]);
   const { user } = useUser();
+  const [QuizzesDay, setQuizzesDay] = useState<any[]>([]);
+  const hasFetched = useRef(false);
 
   console.log("Quiz Data", QuizData);
+
+  const getDailyQuiz = () => {
+    const day = new Date();
+    const dayIndex = day.getDay();
+    const todayQuiz = QuizzesPerDay[dayIndex];
+
+    setQuizzesDay([todayQuiz]);
+    console.log("Quizzes", todayQuiz);
+  };
 
   const project = [
     {
@@ -35,7 +47,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user) {
+      if (hasFetched.current) return;
+      hasFetched.current = true;
       GetQuiz();
+      getDailyQuiz();
     }
   }, [user]);
 
