@@ -1,5 +1,14 @@
 "use client";
-import { LoaderCircle, Plus, PlusCircle, PlusIcon } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  LoaderCircle,
+  MicVocal,
+  Plus,
+  PlusCircle,
+  PlusIcon,
+  Timer,
+} from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import QuizCard from "./QuizCard";
@@ -11,13 +20,18 @@ import { QuizDetailContext } from "@/context/QuizDetailContext";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { QuizzesPerDay } from "@/lib/prompt/QuizPerDay/quizzes";
+import Image from "next/image";
 
 const Dashboard = () => {
   const [loading, setLoading] = React.useState(true);
   const [QuizData, setQuizData] = React.useState<any>([]);
   const { user } = useUser();
   const [QuizzesDay, setQuizzesDay] = useState<any>();
+  const [total, setTotal] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+  const [viewIndex, setViewIndex] = useState(0);
   const hasFetched = useRef(false);
+  const PAGE_SIZE = 3;
 
   console.log("Quiz Data", QuizData);
 
@@ -49,25 +63,51 @@ const Dashboard = () => {
     if (user) {
       if (hasFetched.current) return;
       hasFetched.current = true;
-      GetQuiz();
+      GetQuiz(0);
       getDailyQuiz();
     }
   }, [user]);
+  const formatDate = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
 
-  const GetQuiz = async () => {
+    const getOrdinal = (n: any) => {
+      const s = ["th", "st", "nd", "rd"];
+      const v = n % 100;
+      return s[(v - 20) % 10] || s[v] || s[0];
+    };
+
+    return `${day}${getOrdinal(day)} ${month} ${year}`;
+  };
+
+  const GetQuiz = async (pageIndex = 0) => {
     setLoading(true);
+    const from = pageIndex * PAGE_SIZE; // inclusive
+    const to = from + PAGE_SIZE - 1;
     try {
-      const { data: Quiz, error } = await supabase
+      const {
+        data: Quiz,
+        error,
+        count,
+      } = await supabase
         .from("Quiz")
         .select("created_at, Quiz_id, QuizTitle")
         .eq("userEmail", user?.emailAddresses[0]?.emailAddress)
-        .or("status.is.null,status.neq.completed");
+        .or("status.is.null,status.neq.completed")
+        .order("created_at", { ascending: false }) // newest first
+        .range(from, to);
 
       if (error) {
         console.error("Error fetching quiz:", error);
         setQuizData([]); // clear on error
       } else {
-        setQuizData(Quiz || []); // set to empty array if no data
+        setQuizData((prev: any) => {
+          const newPages = [...prev];
+          newPages[page] = Quiz; // store the new page at its correct index
+          return newPages;
+        }); // set to empty array if no data
       }
     } catch (error) {
       console.error("Unexpected error fetching quiz:", error);
@@ -75,6 +115,9 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
+  };
+  const loadMore = () => {
+    /// continue from here
   };
 
   return (
@@ -115,12 +158,34 @@ const Dashboard = () => {
         />
         <QuizCard title="Pending Quizzes" value={2} subtext="On Discuss" />
       </div>
-      <div className="grid lg:grid-cols-3  grid-cols-1 mt-4">
-        <div className="mt-7">
-          <div className="p-8 bg-white ">
-            <h2 className="font-semibold text-lg">Quiz of the day</h2>
-            <p className="mt-2 text-xl uppercase">{QuizzesDay?.title}</p>
-            <p className="text-sm max-w-md">{QuizzesDay.description}</p>
+      <div className="grid lg:grid-cols-3   grid-cols-1 mt-4">
+        <div className="mt-7 flex w-fit  gap-4 max-h-[240px]  py-2 px-4 bg-white rounded-lg ">
+          <div className="mt-6">
+            <div className="flex justify-between items-center">
+              <h2 className="font-semibold text-lg uppercase  bg-gradient-to-b from-[#4382BE] to-[#45B4A6] text-transparent bg-clip-text">
+                Quiz of the day
+              </h2>
+              <h2 className="h-4 w-4 rounded-full  bg-gradient-to-b from-[#4382BE] to-[#45B4A6] py-2"></h2>
+            </div>
+            <p className="mt-2 uppercase text-sm font-bold  text-green-950">
+              Topic: {QuizzesDay?.title}
+            </p>
+            <p className="text-xs max-w-md text-green-800">
+              {QuizzesDay?.description}
+            </p>
+            <div className="mt-4 flex items-center justify-between  ">
+              <div className="text-xs flex items-center gap-1 ">
+                <Timer size={14} />
+                <h3>{formatDate()}</h3>
+              </div>
+              <div className="text-xs mr-4 flex items-center gap-1">
+                <MicVocal size={14} />
+                <h2>{QuizzesDay?.subject}</h2>
+              </div>
+            </div>
+            <div className="mt-8 mx-4">
+              <Button className="w-full">Start Quiz</Button>
+            </div>
           </div>
         </div>
         <div className=" p-6">
@@ -154,25 +219,33 @@ const Dashboard = () => {
                   </h2>
                 </div>
               ) : (
-                <div className="flex flex-col gap-6 mt-4">
-                  {QuizData.map((quiz: any, index: number) => (
-                    <Link
-                      href={`/dashboard/quiz/${quiz?.Quiz_id}`}
-                      key={index}
-                      className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
-                    >
-                      <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
-                      <div>
-                        <h3 className="text-sm font-medium">
-                          {quiz?.QuizTitle}
-                        </h3>
-                        <p className="font-extralight text-xs">
-                          Created:{" "}
-                          {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-1 flex-col gap-6 mt-4">
+                    {QuizData.map((quiz: any, index: number) => (
+                      <Link
+                        href={`/dashboard/quiz/${quiz?.Quiz_id}`}
+                        key={index}
+                        className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
+                      >
+                        <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
+                        <div>
+                          <h3 className="text-sm font-medium">
+                            {quiz?.QuizTitle}
+                          </h3>
+                          <p className="font-extralight text-xs">
+                            Created:{" "}
+                            {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                  <div
+                    className="cursor-pointer hover:bg-gray-300 outline outline-green-700 rounded-full transition-all duration-200 p-2"
+                    onClick={loadMore}
+                  >
+                    <ArrowRight />
+                  </div>
                 </div>
               )}
             </div>
