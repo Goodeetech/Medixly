@@ -16,7 +16,7 @@ const Dashboard = () => {
   const [loading, setLoading] = React.useState(true);
   const [QuizData, setQuizData] = React.useState<any>([]);
   const { user } = useUser();
-  const [QuizzesDay, setQuizzesDay] = useState<any[]>([]);
+  const [QuizzesDay, setQuizzesDay] = useState<any>();
   const hasFetched = useRef(false);
 
   console.log("Quiz Data", QuizData);
@@ -26,7 +26,7 @@ const Dashboard = () => {
     const dayIndex = day.getDay();
     const todayQuiz = QuizzesPerDay[dayIndex];
 
-    setQuizzesDay([todayQuiz]);
+    setQuizzesDay(todayQuiz);
     console.log("Quizzes", todayQuiz);
   };
 
@@ -116,8 +116,12 @@ const Dashboard = () => {
         <QuizCard title="Pending Quizzes" value={2} subtext="On Discuss" />
       </div>
       <div className="grid lg:grid-cols-3  grid-cols-1 mt-4">
-        <div>
-          <Chart />
+        <div className="mt-7">
+          <div className="p-8 bg-white ">
+            <h2 className="font-semibold text-lg">Quiz of the day</h2>
+            <p className="mt-2 text-xl uppercase">{QuizzesDay?.title}</p>
+            <p className="text-sm max-w-md">{QuizzesDay.description}</p>
+          </div>
         </div>
         <div className=" p-6">
           <ChartPie />
