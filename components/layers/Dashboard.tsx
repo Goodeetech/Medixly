@@ -24,16 +24,16 @@ import Image from "next/image";
 
 const Dashboard = () => {
   const [loading, setLoading] = React.useState(true);
-  const [QuizData, setQuizData] = React.useState<any>([]);
+  const [pages, setPages] = useState<any[]>([]);
+  const [quizPages, setQuizPages] = useState([]);
   const { user } = useUser();
   const [QuizzesDay, setQuizzesDay] = useState<any>();
-  const [total, setTotal] = useState<number | null>(null);
-  const [page, setPage] = useState(0);
-  const [viewIndex, setViewIndex] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+
+  const [pageIndex, setIdx] = useState(0);
+
   const hasFetched = useRef(false);
   const PAGE_SIZE = 3;
-
-  console.log("Quiz Data", QuizData);
 
   const getDailyQuiz = () => {
     const day = new Date();
@@ -82,16 +82,12 @@ const Dashboard = () => {
     return `${day}${getOrdinal(day)} ${month} ${year}`;
   };
 
-  const GetQuiz = async (pageIndex = 0) => {
+  const GetQuiz = async (idx: number) => {
     setLoading(true);
-    const from = pageIndex * PAGE_SIZE; // inclusive
+    const from = idx * PAGE_SIZE; // inclusive
     const to = from + PAGE_SIZE - 1;
     try {
-      const {
-        data: Quiz,
-        error,
-        count,
-      } = await supabase
+      const { data: Quiz, error } = await supabase
         .from("Quiz")
         .select("created_at, Quiz_id, QuizTitle")
         .eq("userEmail", user?.emailAddresses[0]?.emailAddress)
@@ -101,23 +97,28 @@ const Dashboard = () => {
 
       if (error) {
         console.error("Error fetching quiz:", error);
-        setQuizData([]); // clear on error
+        setQuizPages([]); // clear on error
       } else {
-        setQuizData((prev: any) => {
-          const newPages = [...prev];
-          newPages[page] = Quiz; // store the new page at its correct index
-          return newPages;
+        setPages((prev: any) => {
+          const copy = [...prev];
+          copy[idx] = Quiz || [];
+          return copy;
         }); // set to empty array if no data
+        if (!Quiz || Quiz.length < PAGE_SIZE) {
+          setHasMore(false);
+        }
       }
     } catch (error) {
       console.error("Unexpected error fetching quiz:", error);
-      setQuizData([]); // clear on catch error too
+      setPages([]); // clear on catch error too
     } finally {
       setLoading(false);
     }
   };
   const loadMore = () => {
-    /// continue from here
+    const nextIdx = pageIndex + 1;
+    if (!pages[nextIdx]) GetQuiz(nextIdx); // fetch only once
+    setIdx(nextIdx);
   };
 
   return (
@@ -212,7 +213,7 @@ const Dashboard = () => {
             </div>
           ) : (
             <div>
-              {!QuizData || QuizData.length === 0 ? (
+              {!pages || pages.length === 0 ? (
                 <div className="flex justify-center items-center h-[200px]">
                   <h2 className="text-sm flex justify-center items-center text-center">
                     No Existing Quiz.
@@ -221,24 +222,26 @@ const Dashboard = () => {
               ) : (
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex flex-1 flex-col gap-6 mt-4">
-                    {QuizData.map((quiz: any, index: number) => (
-                      <Link
-                        href={`/dashboard/quiz/${quiz?.Quiz_id}`}
-                        key={index}
-                        className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
-                      >
-                        <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
-                        <div>
-                          <h3 className="text-sm font-medium">
-                            {quiz?.QuizTitle}
-                          </h3>
-                          <p className="font-extralight text-xs">
-                            Created:{" "}
-                            {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
+                    {(pages[pageIndex] || []).map(
+                      (quiz: any, index: number) => (
+                        <Link
+                          href={`/dashboard/quiz/${quiz?.Quiz_id}`}
+                          key={index}
+                          className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
+                        >
+                          <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
+                          <div>
+                            <h3 className="text-sm font-medium">
+                              {quiz?.QuizTitle}
+                            </h3>
+                            <p className="font-extralight text-xs">
+                              Created:{" "}
+                              {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
+                            </p>
+                          </div>
+                        </Link>
+                      )
+                    )}
                   </div>
                   <div
                     className="cursor-pointer hover:bg-gray-300 outline outline-green-700 rounded-full transition-all duration-200 p-2"
