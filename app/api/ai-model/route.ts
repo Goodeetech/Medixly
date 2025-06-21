@@ -38,17 +38,19 @@ export async function POST(req: Request) {
     .replace("{{seed}}", seed.toString());
 
   const openai = new OpenAI({
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: process.env.OPENAI_KEY,
+    baseURL: "https://api.groq.com/openai/v1",
+    apiKey: process.env.GROQ_API_KEY,
   });
   const maxRetries = 3;
   const retryDelay = 2000;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
+      console.time("🔁 GROQ Completion");
       const completion = await openai.chat.completions.create({
-        model: "meta-llama/llama-4-maverick:free",
+        model: "llama3-8b-8192",
         messages: [{ role: "user", content: FinalPrompt }],
       });
+      console.timeEnd("🔁 GROQ Completion");
       const message = completion.choices?.[0]?.message?.content;
 
       if (!message) {
