@@ -235,35 +235,11 @@ const StartQuiz = () => {
             <div>
               <Timer />
             </div>
-            <div>
-              <Collapsible className="bg-white shadow-2xl p-4">
-                <CollapsibleTrigger className="flex justify-between items-center gap-10 text-sm">
-                  <div>Quiz Questions List</div>
-                  <div>
-                    <ChevronUp color="#2e877c" />
-                  </div>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="flex flex-col gap-2 mt-2">
-                    {questions.map((quiz: any, index: number) => (
-                      <div
-                        key={index}
-                        className={`${
-                          quizNumber >= index &&
-                          "text-green-900 bg-green-100  rounded-lg"
-                        } flex justify-between gap-6 items-center p-2 text-sm`}
-                      >
-                        <h2> Quiz Question {index + 1}</h2>
-                        <div>
-                          {quizNumber >= index && (
-                            <CircleCheck strokeWidth={2} />
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
+            <div className="flex flex-col mt-10 items-center justify-center font-semibold text-gray-700 p-8 bg-gray-50 shadow-xl   ">
+              <h2 className=" text-2xl  ">
+                {quizNumber + 1}/{questions.length}
+              </h2>
+              <p className="text-md font-medium">Questions</p>
             </div>
           </div>
         </div>
