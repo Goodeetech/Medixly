@@ -222,7 +222,7 @@ const StartQuiz = () => {
             <div>
               <Timer />
             </div>
-            <div className="flex flex-col mt-10 items-center justify-center font-semibold text-gray-700 p-8 bg-gray-50 shadow-xl   ">
+            <div className="flex flex-col mt-10 items-center justify-center font-semibold text-gray-700 p-8 bg-gray-50 shadow-2xl   ">
               <h2 className=" text-2xl  ">
                 {quizNumber + 1}/{questions.length}
               </h2>
