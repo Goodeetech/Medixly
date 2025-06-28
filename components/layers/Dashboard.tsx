@@ -6,6 +6,7 @@ import {
   MicVocal,
   Plus,
   PlusCircle,
+  PlusCircleIcon,
   PlusIcon,
   Timer,
 } from "lucide-react";
@@ -155,10 +156,17 @@ const Dashboard = () => {
           ) : (
             <div>
               {!quiz || quiz.length === 0 ? (
-                <div className="flex justify-center items-center h-[200px]">
+                <div className="flex flex-col gap-4 justify-center items-center h-[200px]">
                   <h2 className="text-sm flex justify-center items-center text-center">
-                    No Existing Quiz.
+                    No Pending Quiz.
                   </h2>
+                  <Link
+                    href="/dashboard/create-quiz"
+                    className="text-[#289f8f] transition-all duration-300 ml-2 flex items-center gap-2 cursor-pointer outline outline-[#289f8f] rounded-full px-4 py-2 hover:bg-[#289f8f] hover:text-white "
+                  >
+                    <Plus />
+                    <h2 className="text-[15px]"> Create Quiz</h2>
+                  </Link>
                 </div>
               ) : (
                 <div className="flex items-center justify-between gap-2">

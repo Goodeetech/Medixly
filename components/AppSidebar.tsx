@@ -123,7 +123,10 @@ const AppSidebar = () => {
                       // className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
                       <Link href={item.path} onClick={handleLinkClick}>
-                        <item.icon color="#3DAEAC" strokeWidth={2} size={64} />
+                        <item.icon
+                          color="#3DAEAC"
+                          strokeWidth={pathname.startsWith(item.path) ? 3 : 2}
+                        />
                         <span
                           className={`text-[16px]  px-1   ${
                             pathname.startsWith(item.path) && "text-gray-800 "
