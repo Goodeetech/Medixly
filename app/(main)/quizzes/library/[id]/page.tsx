@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { LibraryQuizContext } from "@/context/LibraryQuizContext";
+import { QuizzesPerDay } from "@/lib/prompt/QuizPerDay/quizzes";
 
 type Quiz = {
   id: string;
@@ -35,10 +36,20 @@ const SingleLibraryPage = () => {
   const { libraryQuiz, setLibraryQuiz } = useContext(LibraryQuizContext);
 
   const getQuiz = () => {
-    const allQuizzes = QuizCategory.flatMap(
+    // Get all quizzes from the library categories
+    const libraryQuizzes = QuizCategory.flatMap(
       (category) => category.quizzes || []
     );
+
+    // Get all quizzes from today's list
+    const dailyQuizzes = QuizzesPerDay || [];
+
+    // Merge both arrays into one
+    const allQuizzes = [...libraryQuizzes, ...dailyQuizzes];
+
+    // Find the quiz with the matching ID
     const matchedQuiz = allQuizzes.find((quiz) => quiz.id === id);
+
     setSingleQuiz(matchedQuiz);
   };
 

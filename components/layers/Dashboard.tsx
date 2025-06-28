@@ -21,19 +21,16 @@ import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { QuizzesPerDay } from "@/lib/prompt/QuizPerDay/quizzes";
 import Image from "next/image";
+import QuizOfDay from "./QuizOfDay";
 
 const Dashboard = () => {
   const [loading, setLoading] = React.useState(true);
-  const [pages, setPages] = useState<any[]>([]);
-  const [quizPages, setQuizPages] = useState([]);
+  const [quiz, setQuiz] = useState<any[]>([]);
+
   const { user } = useUser();
   const [QuizzesDay, setQuizzesDay] = useState<any>();
-  const [hasMore, setHasMore] = useState(true);
-
-  const [pageIndex, setIdx] = useState(0);
 
   const hasFetched = useRef(false);
-  const PAGE_SIZE = 3;
 
   const getDailyQuiz = () => {
     const day = new Date();
@@ -63,7 +60,7 @@ const Dashboard = () => {
     if (user) {
       if (hasFetched.current) return;
       hasFetched.current = true;
-      GetQuiz(0);
+      GetQuiz();
       getDailyQuiz();
     }
   }, [user]);
@@ -82,10 +79,8 @@ const Dashboard = () => {
     return `${day}${getOrdinal(day)} ${month} ${year}`;
   };
 
-  const GetQuiz = async (idx: number) => {
+  const GetQuiz = async () => {
     setLoading(true);
-    const from = idx * PAGE_SIZE; // inclusive
-    const to = from + PAGE_SIZE - 1;
     try {
       const { data: Quiz, error } = await supabase
         .from("Quiz")
@@ -93,32 +88,20 @@ const Dashboard = () => {
         .eq("userEmail", user?.emailAddresses[0]?.emailAddress)
         .or("status.is.null,status.neq.completed")
         .order("created_at", { ascending: false }) // newest first
-        .range(from, to);
+        .range(0, 3);
 
       if (error) {
         console.error("Error fetching quiz:", error);
-        setQuizPages([]); // clear on error
+        // clear on error
       } else {
-        setPages((prev: any) => {
-          const copy = [...prev];
-          copy[idx] = Quiz || [];
-          return copy;
-        }); // set to empty array if no data
-        if (!Quiz || Quiz.length < PAGE_SIZE) {
-          setHasMore(false);
-        }
+        setQuiz(Quiz || []); // set to empty array if no data
       }
     } catch (error) {
       console.error("Unexpected error fetching quiz:", error);
-      setPages([]); // clear on catch error too
+      setQuiz([]); // clear on catch error too
     } finally {
       setLoading(false);
     }
-  };
-  const loadMore = () => {
-    const nextIdx = pageIndex + 1;
-    if (!pages[nextIdx]) GetQuiz(nextIdx); // fetch only once
-    setIdx(nextIdx);
   };
 
   return (
@@ -160,35 +143,7 @@ const Dashboard = () => {
         <QuizCard title="Pending Quizzes" value={2} subtext="On Discuss" />
       </div>
       <div className="grid lg:grid-cols-3   grid-cols-1 mt-4">
-        <div className="mt-7 flex w-fit  gap-4 max-h-[240px]  py-2 px-4 bg-white rounded-lg ">
-          <div className="mt-6">
-            <div className="flex justify-between items-center">
-              <h2 className="font-semibold text-lg uppercase  bg-gradient-to-b from-[#4382BE] to-[#45B4A6] text-transparent bg-clip-text">
-                Quiz of the day
-              </h2>
-              <h2 className="h-4 w-4 rounded-full  bg-gradient-to-b from-[#4382BE] to-[#45B4A6] py-2"></h2>
-            </div>
-            <p className="mt-2 uppercase text-sm font-bold  text-green-950">
-              Topic: {QuizzesDay?.title}
-            </p>
-            <p className="text-xs max-w-md text-green-800">
-              {QuizzesDay?.description}
-            </p>
-            <div className="mt-4 flex items-center justify-between  ">
-              <div className="text-xs flex items-center gap-1 ">
-                <Timer size={14} />
-                <h3>{formatDate()}</h3>
-              </div>
-              <div className="text-xs mr-4 flex items-center gap-1">
-                <MicVocal size={14} />
-                <h2>{QuizzesDay?.subject}</h2>
-              </div>
-            </div>
-            <div className="mt-8 mx-4">
-              <Button className="w-full">Start Quiz</Button>
-            </div>
-          </div>
-        </div>
+        <QuizOfDay QuizzesDay={QuizzesDay} />
         <div className=" p-6">
           <ChartPie />
         </div>
@@ -213,7 +168,7 @@ const Dashboard = () => {
             </div>
           ) : (
             <div>
-              {!pages || pages.length === 0 ? (
+              {!quiz || quiz.length === 0 ? (
                 <div className="flex justify-center items-center h-[200px]">
                   <h2 className="text-sm flex justify-center items-center text-center">
                     No Existing Quiz.
@@ -222,32 +177,24 @@ const Dashboard = () => {
               ) : (
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex flex-1 flex-col gap-6 mt-4">
-                    {(pages[pageIndex] || []).map(
-                      (quiz: any, index: number) => (
-                        <Link
-                          href={`/dashboard/quiz/${quiz?.Quiz_id}`}
-                          key={index}
-                          className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
-                        >
-                          <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
-                          <div>
-                            <h3 className="text-sm font-medium">
-                              {quiz?.QuizTitle}
-                            </h3>
-                            <p className="font-extralight text-xs">
-                              Created:{" "}
-                              {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
-                            </p>
-                          </div>
-                        </Link>
-                      )
-                    )}
-                  </div>
-                  <div
-                    className="cursor-pointer hover:bg-gray-300 outline outline-green-700 rounded-full transition-all duration-200 p-2"
-                    onClick={loadMore}
-                  >
-                    <ArrowRight />
+                    {quiz.map((quiz: any, index: number) => (
+                      <Link
+                        href={`/dashboard/quiz/${quiz?.Quiz_id}`}
+                        key={index}
+                        className="flex gap-2 items-center  p-2 hover:bg-[#44B0A8] hover:text-white hover:font-semibold bg-gray-0 rounded-lg transition-all duration-300 "
+                      >
+                        <div className="h-4 w-4 bg-[#44B0A8] rounded-full" />
+                        <div>
+                          <h3 className="text-sm font-medium">
+                            {quiz?.QuizTitle}
+                          </h3>
+                          <p className="font-extralight text-xs">
+                            Created:{" "}
+                            {moment(quiz?.created_at).format("MMMM Do YYYY")}{" "}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
                 </div>
               )}
