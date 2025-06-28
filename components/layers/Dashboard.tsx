@@ -64,20 +64,6 @@ const Dashboard = () => {
       getDailyQuiz();
     }
   }, [user]);
-  const formatDate = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.toLocaleString("default", { month: "long" });
-    const year = date.getFullYear();
-
-    const getOrdinal = (n: any) => {
-      const s = ["th", "st", "nd", "rd"];
-      const v = n % 100;
-      return s[(v - 20) % 10] || s[v] || s[0];
-    };
-
-    return `${day}${getOrdinal(day)} ${month} ${year}`;
-  };
 
   const GetQuiz = async () => {
     setLoading(true);
@@ -88,7 +74,7 @@ const Dashboard = () => {
         .eq("userEmail", user?.emailAddresses[0]?.emailAddress)
         .or("status.is.null,status.neq.completed")
         .order("created_at", { ascending: false }) // newest first
-        .range(0, 3);
+        .range(0, 2);
 
       if (error) {
         console.error("Error fetching quiz:", error);

@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import { LibraryQuizContext } from "@/context/LibraryQuizContext";
 import { useRouter } from "next/navigation";
+import moment from "moment";
 
 const QuizOfDay = ({ QuizzesDay }: { QuizzesDay: any }) => {
   console.log("QuizzesDay", QuizzesDay?.id);
@@ -32,15 +33,18 @@ const QuizOfDay = ({ QuizzesDay }: { QuizzesDay: any }) => {
           <div className="mt-4 flex items-center justify-between  ">
             <div className="text-xs flex items-center gap-1 ">
               <Timer size={14} />
-              {/* <h3>{formatDate()}</h3> */}
+              {moment().format("MMMM Do YYYY")}
             </div>
             <div className="text-xs mr-4 flex items-center gap-1">
               <MicVocal size={14} />
               <h2>{QuizzesDay?.subject}</h2>
             </div>
           </div>
-          <div className="mt-8 mx-4">
-            <Button className="w-full" onClick={() => GoToQuiz(QuizzesDay?.id)}>
+          <div className="mt-8 mx-4 ">
+            <Button
+              className="w-full cursor-pointer"
+              onClick={() => GoToQuiz(QuizzesDay?.id)}
+            >
               Start Quiz
             </Button>
           </div>
