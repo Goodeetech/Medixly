@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-const Timer = () => {
-  const TOTAL_TIME = 5 * 60;
+const Timer = ({ time }: { time: number }) => {
+  const TOTAL_TIME = time * 60;
   const RADIUS = 54;
   const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 

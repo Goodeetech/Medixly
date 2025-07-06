@@ -27,7 +27,12 @@ const StartQuiz = () => {
   const { id } = useParams();
   const router = useRouter();
   const { quizDetails } = React.useContext(QuizDetailContext);
+  const { quizAll, setQuizAll } = React.useContext(QuizDetailContext);
   // console.log("id", id);
+  console.log("quizAll", quizAll?.TimeLimit);
+
+  const time = Number(quizAll?.TimeLimit.slice(0, 2).trim());
+  console.log(time);
   const questions = quizDetails?.questionList || [];
   const [loading, setloading] = React.useState(false);
 
@@ -233,7 +238,7 @@ const StartQuiz = () => {
 
           <div className="lg:col-span-3 lg:flex gap-4 flex-col hidden  ">
             <div>
-              <Timer />
+              <Timer time={time} />
             </div>
             <div className="flex flex-col mt-10 items-center justify-center font-semibold text-gray-700 p-8 bg-gray-50 shadow-2xl   ">
               <h2 className=" text-2xl  ">

@@ -125,10 +125,11 @@ const FormCard: React.FC<FormCardProps> = ({
             <SelectValue placeholder="Select Duration" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="No time limit">No time limit</SelectItem>
+            {/* <SelectItem value="No time limit">No time limit</SelectItem> */}
+            <SelectItem value="5 minutes">5 minutes</SelectItem>
             <SelectItem value="10 minutes">10 minutes</SelectItem>
-            <SelectItem value="20 minutes">20 minutes</SelectItem>
-            <SelectItem value="30 minutes">30 minutes</SelectItem>
+            <SelectItem value="15 minutes">15 minutes</SelectItem>
+            <SelectItem value="18 minutes">18 minutes</SelectItem>
           </SelectContent>
         </Select>
       </div>

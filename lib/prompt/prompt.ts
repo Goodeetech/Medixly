@@ -16,7 +16,7 @@ Your task is to generate a high-quality, medically accurate quiz based on the fo
 4. Use only **one correct answer** and provide exactly **three distractors** per question.
 5. Never include misleading or factually incorrect questions, answers, or explanations.
 6. Prioritize core concepts, common clinical scenarios, and high-yield facts.
-7. Create between 10 to 15 questions to match the time limit and difficulty.
+7. Create between 10 to 20 questions to match the time limit and difficulty.
 8. All questions must be fresh and original—no phrasing reused from previous generations.
 9. Do not include any question where the correct answer cannot be unambiguously verified using standard medical references.
 10. The correct answer must be one of the 4 options listed. It must be **100% accurate**.

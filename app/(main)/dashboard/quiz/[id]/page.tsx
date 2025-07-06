@@ -11,6 +11,8 @@ import { toast } from "sonner";
 const StartQuiz = () => {
   const { id } = useParams();
   const { quizDetails, setQuizDetails } = React.useContext(QuizDetailContext);
+  const { quizAll, setQuizAll } = React.useContext(QuizDetailContext);
+
   const [quizData, setQuizData] = React.useState<any>();
   const [loading, setLoading] = React.useState(true);
   const router = useRouter();
@@ -27,6 +29,7 @@ const StartQuiz = () => {
 
       if (Quiz && Quiz.length > 0) {
         setQuizData(Quiz[0]);
+        setQuizAll(Quiz[0]);
 
         setLoading(false);
       }
