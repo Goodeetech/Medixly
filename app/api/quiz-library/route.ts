@@ -1,6 +1,6 @@
+import { QuizLibraryPrompt } from "@/lib/prompt/prompt";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { QuizLibraryPrompt } from "@/lib/prompt/prompt";
 
 export async function POST(req: Request) {
   const { title, questionCount, prompt } = await req.json();
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     try {
       console.time("🔁 GROQ Completion");
       const completion = await openai.chat.completions.create({
-        model: "llama3-70b-8192",
+        model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: FinalPrompt }],
       });
       console.timeEnd("🔁 GROQ Completion");
