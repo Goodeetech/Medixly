@@ -6,7 +6,7 @@ import Specialty from "./_component/Specialty";
 const Practice = () => {
   const [step, setStep] = useState(1);
   return (
-    <div className="md:py-20 py-40 px-10 ">
+    <div className="md:py-20 pt-8 px-10 ">
       <Welcome />
     </div>
   );

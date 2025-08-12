@@ -32,13 +32,13 @@ const Welcome = () => {
   };
 
   return (
-    <div className="  flex justify-between items-start gap-10   ">
+    <div className="  flex justify-between lg:flex-row flex-col items-start gap-10   ">
       <div className="shadow-xl bg-gray-100 w-full px-10 py-10">
         <div className="flex  items-center flex-col gap-3">
           <div className="w-full flex justify-center items-center">
             <Image src={"/challe.png"} alt="challe" width={180} height={180} />
           </div>
-          <h2 className="text-xl font-semibold text-green-950/90">
+          <h2 className="text-xl font-semibold text-green-950/90 text-center">
             Welcome to Clinical Challenges!
           </h2>
           <p className="text-sm text-green-950/70 text-center max-w-md">
@@ -47,7 +47,7 @@ const Welcome = () => {
           </p>
         </div>
       </div>
-      <div className="w-full px-8">
+      <div className="w-full px-8 py-8">
         <h2 className="text-md font-semibold  text-green-950/80 ">
           Choose your Specialty:
         </h2>

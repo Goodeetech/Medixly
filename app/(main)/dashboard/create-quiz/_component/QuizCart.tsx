@@ -146,7 +146,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
           <div>
             <div className="flex px-6 py-2 items-center bg-gray-50  gap-4 justify-between">
               <div>
-                <h1 className="text-3xl font-bold">
+                <h1 className="md:text-3xl text-xl  font-bold">
                   You&apos;re One Step Away from Boosting Your Brainpower
                 </h1>
                 <h3 className="text-sm text-gray-500">
@@ -154,7 +154,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                   the learning begin
                 </h3>
               </div>
-              <div>
+              <div className="md:block hidden">
                 <Image
                   src={"/gemini.png"}
                   alt="gemini"
@@ -164,7 +164,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
               </div>
             </div>
             <div>
-              <div className="md:px-4 mx-8 my-2 bg-[#34363b] rounded-lg text-gray-200 shadow-2xl flex gap-10 items-center justify-center py-4 ">
+              <div className=" my-2 bg-[#34363b] rounded-lg text-gray-200 shadow-2xl flex gap-10 px-6 py-4 ">
                 <div className="lg:flex hidden justify-center items-center   shadow-xl bg-[#1f2020] rounded ">
                   <Image
                     src={"/quizimage.png"}
@@ -175,14 +175,14 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-2xl capitalize font-semibold">
+                  <h3 className="md:text-2xl text-xl capitalize font-semibold">
                     {formData?.QuizTitle}
                   </h3>
                   <h5 className="font-light text-xs max-w-md">
                     {formData?.QuizDescription}
                   </h5>
 
-                  <div className="flex mt-6 gap-2 items-center">
+                  <div className="md:flex hidden mt-6 gap-2 items-center">
                     {/* <div className=" rounded-full bg-amber-200 h-8 w-8 "></div> */}
                     <Image
                       src={formData?.imageUrl || "/quizimage.png"}
@@ -191,7 +191,7 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                       width={20}
                       className=""
                     />
-                    <div className="flex flex-col ">
+                    <div className="flex flex-col  ">
                       <h3 className="text-xs font-extralight">Created by</h3>
                       <h2 className="text-xs">{userDetails?.name}</h2>
                     </div>
@@ -218,23 +218,23 @@ const QuizCart: React.FC<QuizCartProps> = ({ formData, step, GoToNext }) => {
                   </div>
                   <div className="mt-6 flex items-center gap-6">
                     <Button
-                      className="!px-8 cursor-pointer !py-2 tracking-wider"
+                      className="!px-8 md:w-fit  w-full cursor-pointer !py-2 tracking-wider"
                       disabled={loadingSave}
                       onClick={handleStartQuiz}
                     >
                       {loadingSave && <Loader2Icon className="animate-spin" />}
                       Start Quiz <ArrowRight size={32} />
                     </Button>
-                    <div className="p-2 rounded-full outline-gray-400 outline flex items-center ">
+                    <div className="p-2 rounded-full outline-gray-400 hidden outline md:flex items-center ">
                       <Share2Icon size={16} />
                     </div>
-                    <div className="p-2 rounded-full outline-gray-400 outline flex items-center ">
+                    <div className="p-2 rounded-full outline-gray-400 hidden outline md:flex items-center ">
                       <Heart size={16} />
                     </div>
 
                     <Button
                       variant="outline"
-                      className="bg-[#34363b] cursor-pointer tracking-wide font-medium"
+                      className="bg-[#34363b] cursor-pointer tracking-wide font-medium hidden md:flex"
                       onClick={handleSaveQuiz}
                       disabled={loadingSave}
                     >
