@@ -1,7 +1,15 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import Welcome from "./_component/Welcome";
+import Specialty from "./_component/Specialty";
 
 const Practice = () => {
-  return <div>Practice</div>;
+  const [step, setStep] = useState(1);
+  return (
+    <div className="md:py-20 py-40 px-10 ">
+      <Welcome />
+    </div>
+  );
 };
 
 export default Practice;
