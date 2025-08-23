@@ -29,7 +29,15 @@ import Link from "next/link";
 const AppSidebar = () => {
   const pathname = usePathname();
   const { isMobile, setOpen, setOpenMobile } = useSidebar();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // or a skeleton placeholder
+  }
   const sidebarItems = [
     {
       name: "Dashboard",
@@ -83,7 +91,12 @@ const AppSidebar = () => {
 
   return (
     <div>
-      <Sidebar collapsible="icon" variant="sidebar" side="left">
+      <Sidebar
+        collapsible="icon"
+        variant="sidebar"
+        side="left"
+        className={!mounted ? "transition-none" : "transition-all"}
+      >
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel className="my-4 outline-none">
