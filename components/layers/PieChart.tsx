@@ -57,7 +57,7 @@ export function ChartPie() {
   }, []);
 
   return (
-    <Card className="flex flex-col  border-none shadow-none">
+    <Card className="flex flex-col  border-none shadow-none w-full">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}

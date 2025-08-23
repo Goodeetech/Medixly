@@ -131,7 +131,7 @@ const Dashboard = () => {
       </div>
       <div className="grid lg:grid-cols-3   grid-cols-1 mt-4">
         <QuizOfDay QuizzesDay={QuizzesDay} />
-        <div className=" p-6">
+        <div className=" py-6 w-full">
           <ChartPie />
         </div>
         <div className="bg-white  rounded-lg shadow-lg p-6 font-semibold ">

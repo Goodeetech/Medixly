@@ -16,7 +16,7 @@ const QuizOfDay = ({ QuizzesDay }: { QuizzesDay: any }) => {
 
   return (
     <div>
-      <div className="mt-7 flex w-fit  gap-4 max-h-[240px]  py-2 px-4 bg-white rounded-lg ">
+      <div className="mt-7 mb-2 flex w-fit  gap-4 max-h-[260px]  py-4 px-4 bg-white rounded-lg ">
         <div className="mt-6">
           <div className="flex justify-between items-center">
             <h2 className="font-semibold text-lg uppercase  bg-gradient-to-b from-[#4382BE] to-[#45B4A6] text-transparent bg-clip-text">
