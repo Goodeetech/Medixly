@@ -98,6 +98,7 @@ const AppSidebar = () => {
                 alt="logo"
                 width={180}
                 height={180}
+                priority
                 className="object-contain"
               />
             </SidebarGroupLabel>
