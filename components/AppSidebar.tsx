@@ -30,11 +30,6 @@ const AppSidebar = () => {
   const pathname = usePathname();
   const { isMobile, setOpen, setOpenMobile } = useSidebar();
 
-  // (Optional) also close the mobile drawer whenever the route changes
-  useEffect(() => {
-    if (isMobile) setOpenMobile(false);
-  }, [pathname, isMobile, setOpenMobile]);
-
   const handleNavClick = () => {
     if (isMobile) {
       setOpenMobile(false); // close mobile drawer
