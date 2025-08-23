@@ -28,13 +28,6 @@ import Link from "next/link";
 
 const AppSidebar = () => {
   const pathname = usePathname();
-  const { isMobile, openMobile, setOpenMobile } = useSidebar();
-
-  const handleLinkClick = () => {
-    if (isMobile) {
-      setOpenMobile(false);
-    }
-  };
 
   const sidebarItems = [
     {
@@ -122,7 +115,7 @@ const AppSidebar = () => {
                       asChild
                       // className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
-                      <Link href={item.path} onClick={handleLinkClick}>
+                      <Link href={item.path}>
                         <item.icon
                           color="#3DAEAC"
                           strokeWidth={pathname.startsWith(item.path) ? 3 : 2}

@@ -193,7 +193,7 @@ const SingleLibraryPage = () => {
                       </div>
                       <div className="flex flex-col">
                         <h3 className="text-xs font-extralight">Time Limit</h3>
-                        <h2 className="text-xs">10mins</h2>
+                        <h2 className="text-xs">5mins</h2>
                       </div>
                     </div>
                   </div>
