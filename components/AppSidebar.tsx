@@ -101,7 +101,7 @@ const AppSidebar = () => {
         collapsible="icon"
         variant="sidebar"
         side="left"
-        className={!mounted ? "transition-none" : "transition-all"}
+        className={!mounted ? "invisible" : ""}
       >
         <SidebarContent>
           <SidebarGroup>
