@@ -13,15 +13,13 @@ export default function DashboardLayout({
   return (
     <div>
       <DashBoardProvider>
-        <SidebarProvider>
-          <AppSidebar />
-          <main className="w-full">
-            <SidebarTrigger />
-            <NavBar />
-            {children}
-          </main>
-          <Toaster />
-        </SidebarProvider>
+        <AppSidebar />
+        <main className="w-full">
+          <SidebarTrigger />
+          <NavBar />
+          {children}
+        </main>
+        <Toaster />
       </DashBoardProvider>
     </div>
   );

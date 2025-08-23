@@ -3,6 +3,7 @@ import { Sora } from "next/font/google";
 import "./globals.css";
 import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const sora = Sora({
   variable: "--font-geist-sans",
@@ -22,11 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${sora.className} antialiased`}>
-          <Provider>{children}</Provider>
-        </body>
-      </html>
+      <SidebarProvider>
+        <html lang="en">
+          <body className={`${sora.className} antialiased`}>
+            <Provider>{children}</Provider>
+          </body>
+        </html>
+      </SidebarProvider>
     </ClerkProvider>
   );
 }
