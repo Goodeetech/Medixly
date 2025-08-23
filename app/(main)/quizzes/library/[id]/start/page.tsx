@@ -141,7 +141,7 @@ const StartQuiz = () => {
         // main question display
         <div className="lg:grid lg:grid-cols-12 w-full gap-10">
           <div className="lg:col-span-9">
-            <h1 className="text-2xl  font-semibold mb-6">
+            <h1 className="md:text-2xl text-xl  font-semibold mb-6">
               {currentQuestion?.question}
             </h1>
 

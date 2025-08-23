@@ -28,6 +28,20 @@ import Link from "next/link";
 
 const AppSidebar = () => {
   const pathname = usePathname();
+  const { isMobile, setOpen, setOpenMobile } = useSidebar();
+
+  // (Optional) also close the mobile drawer whenever the route changes
+  useEffect(() => {
+    if (isMobile) setOpenMobile(false);
+  }, [pathname, isMobile, setOpenMobile]);
+
+  const handleNavClick = () => {
+    if (isMobile) {
+      setOpenMobile(false); // close mobile drawer
+    } else {
+      setOpen(false); // collapse on desktop (since you're using collapsible="icon")
+    }
+  };
 
   const sidebarItems = [
     {
@@ -115,7 +129,7 @@ const AppSidebar = () => {
                       asChild
                       // className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
-                      <Link href={item.path}>
+                      <Link href={item.path} onClick={handleNavClick}>
                         <item.icon
                           color="#3DAEAC"
                           strokeWidth={pathname.startsWith(item.path) ? 3 : 2}
