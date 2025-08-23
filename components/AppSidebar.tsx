@@ -122,7 +122,13 @@ const AppSidebar = () => {
                       asChild
                       // className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
-                      <Link href={item.path} onClick={handleNavClick}>
+                      <Link
+                        href={item.path}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavClick;
+                        }}
+                      >
                         <item.icon
                           color="#3DAEAC"
                           strokeWidth={pathname.startsWith(item.path) ? 3 : 2}
