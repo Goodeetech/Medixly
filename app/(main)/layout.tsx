@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import DashBoardProvider from "./provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
@@ -18,6 +18,9 @@ export default function DashboardLayout({
           <main className="w-full">
             <SidebarTrigger />
             <NavBar />
+            <Suspense
+              fallback={<div className="p-4">Loading...</div>}
+            ></Suspense>
             {children}
           </main>
           <Toaster />
