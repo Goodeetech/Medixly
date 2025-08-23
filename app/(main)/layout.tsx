@@ -15,11 +15,11 @@ export default function DashboardLayout({
       <DashBoardProvider>
         <SidebarProvider>
           <AppSidebar />
-
-          <SidebarTrigger />
-          <NavBar />
-          {children}
-
+          <main className="w-full">
+            <SidebarTrigger />
+            <NavBar />
+            {children}
+          </main>
           <Toaster />
         </SidebarProvider>
       </DashBoardProvider>
