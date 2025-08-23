@@ -23,13 +23,19 @@ import {
   Wallet,
 } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 const AppSidebar = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const { isMobile, setOpen, setOpenMobile } = useSidebar();
   const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if (isMobile) setOpenMobile(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, isMobile]);
 
   useEffect(() => {
     setMounted(true);

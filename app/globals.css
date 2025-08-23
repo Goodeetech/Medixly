@@ -214,3 +214,10 @@
     --chart-5: 212 97% 87%;
   }
 }
+
+@supports (-webkit-touch-callout: none) {
+  .sidebar {
+    backface-visibility: hidden;
+    -webkit-transform: translateX(-100%);
+  }
+}
