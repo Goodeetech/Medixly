@@ -220,7 +220,7 @@ const StartQuiz = () => {
 
           <div className="lg:col-span-3 lg:flex gap-4 flex-col hidden  ">
             <div>
-              <Timer />
+              <Timer time={5} />
             </div>
             <div className="flex flex-col mt-10 items-center justify-center font-semibold text-gray-700 p-8 bg-gray-50 shadow-2xl   ">
               <h2 className=" text-2xl  ">
