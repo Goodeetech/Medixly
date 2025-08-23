@@ -23,13 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <SidebarProvider>
-        <html lang="en">
-          <body className={`${sora.className} antialiased`}>
-            <Provider>{children}</Provider>
-          </body>
-        </html>
-      </SidebarProvider>
+      <html lang="en">
+        <body className={`${sora.className} antialiased`}>
+          <Provider>{children}</Provider>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
