@@ -38,8 +38,6 @@ const AppSidebar = () => {
   const handleNavClick = () => {
     if (isMobile) {
       setOpenMobile(false); // close mobile drawer
-    } else {
-      setOpen(false); // collapse on desktop (since you're using collapsible="icon")
     }
   };
 
