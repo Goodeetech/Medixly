@@ -102,7 +102,7 @@ const Dashboard = () => {
         </div>
         <div className="flex items-center  gap-4">
           <Link href="/dashboard/create-quiz">
-            <Button className=" bg-gradient-to-b from-[#4382BE] to-[#45B4A6] px-8 py-5 tracking-wide rounded-full cursor-pointer  flex items-center  gap-x-2 hover:bg-[#366861] transition-all duration-400 ">
+            <Button className="bg-gradient-to-b from-[#4382BE] to-[#45B4A6] px-8 py-5 tracking-wide rounded-full cursor-pointer flex items-center gap-x-2 transition-all duration-300 hover:from-[#366FA0] hover:to-[#379D91]">
               <Plus size={32} />
               Create Quiz
             </Button>

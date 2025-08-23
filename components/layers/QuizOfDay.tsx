@@ -19,9 +19,10 @@ const QuizOfDay = ({ QuizzesDay }: { QuizzesDay: any }) => {
       <div className="mt-7 mb-2 flex w-fit  gap-4 max-h-[260px]  py-4 px-4 bg-white rounded-lg ">
         <div className="mt-6">
           <div className="flex justify-between items-center">
-            <h2 className="font-semibold text-lg uppercase  bg-gradient-to-b from-[#4382BE] to-[#45B4A6] text-transparent bg-clip-text">
+            <h2 className="font-semibold text-lg uppercase bg-gradient-to-b from-[#4382BE] to-[#45B4A6] bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
               Quiz of the day
             </h2>
+
             <h2 className="h-4 w-4 rounded-full  bg-gradient-to-b from-[#4382BE] to-[#45B4A6] py-2"></h2>
           </div>
           <p className="mt-2 uppercase text-sm font-bold  text-green-950">

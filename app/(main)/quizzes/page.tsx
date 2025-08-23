@@ -58,9 +58,10 @@ const Quizzes = () => {
   return (
     <div className="lg:p-16 px-2 py-4 ">
       <div className="text-center">
-        <h1 className="text-3xl tracking-wider bg-gradient-to-b from-[#4382BE] to-[#45B4A6] text-transparent bg-clip-text">
+        <h1 className="text-3xl tracking-wider bg-gradient-to-b from-[#4382BE] to-[#45B4A6] text-transparent bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
           Quiz Categories
         </h1>
+
         <div className="flex justify-center  items-center  mt-4  ">
           <div className="flex  items-center justify-center text-center border-2 border-[#b2ede5] rounded-full py-1 px-6 bg-white ">
             <Search className="text-gray-500" />
@@ -98,15 +99,15 @@ const Quizzes = () => {
                               {item.quizzes.map((it: Quiz, ind: number) => (
                                 <div
                                   key={ind}
-                                  className="group relative px-6 py-5 bg-gradient-to-br from-[#4382BE] to-[#45B4A6] text-white rounded-md shadow-md hover:shadow-lg hover:from-[#325352] hover:to-[#1f3a39] transition-all duration-300 cursor-pointer overflow-hidden"
+                                  className="group relative px-6 py-5 bg-gradient-to-br from-[#4382BE] to-[#45B4A6] text-white rounded-md shadow-md hover:shadow-lg hover:from-[#325352] hover:to-[#1f3a39] active:from-[#325352] active:to-[#1f3a39] transition-all duration-300 cursor-pointer overflow-hidden transform-gpu will-change-transform"
                                   onClick={() => GoToQuiz(it.id)}
                                 >
                                   {/* Decorative Arrow on Hover */}
-                                  <div className="absolute top-1/2 right-4 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white text-xl group-hover:translate-x-0 ">
+                                  <div className="absolute top-1/2 right-4 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white text-xl group-hover:translate-x-0 z-10">
                                     <ArrowRight />
                                   </div>
 
-                                  <div className="flex flex-col gap-3">
+                                  <div className="flex flex-col gap-3 relative z-0">
                                     <h3 className="text-lg font-semibold">
                                       {it.title}
                                     </h3>
