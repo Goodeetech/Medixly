@@ -9,18 +9,5 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <div>
-      <SidebarProvider>
-        <AppSidebar />
-        <main className="w-full">
-          <SidebarTrigger />
-          <NavBar />
-
-          {children}
-        </main>
-        <Toaster />
-      </SidebarProvider>
-    </div>
-  );
+  return <div></div>;
 }
