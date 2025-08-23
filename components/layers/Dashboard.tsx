@@ -129,7 +129,7 @@ const Dashboard = () => {
         />
         <QuizCard title="Pending Quizzes" value={2} subtext="On Discuss" />
       </div>
-      <div className="grid lg:grid-cols-3   grid-cols-1 mt-4">
+      <div className="grid lg:grid-cols-3 md:gap-4 gap-2   grid-cols-1 mt-4">
         <QuizOfDay QuizzesDay={QuizzesDay} />
         <div className=" py-6 w-full">
           <ChartPie />
