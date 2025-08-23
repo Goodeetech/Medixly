@@ -30,12 +30,6 @@ const AppSidebar = () => {
   const pathname = usePathname();
   const { isMobile, setOpen, setOpenMobile } = useSidebar();
 
-  useEffect(() => {
-    if (isMobile) {
-      setOpenMobile(false); // close mobile drawer
-    }
-  }, [pathname]);
-
   const sidebarItems = [
     {
       name: "Dashboard",
@@ -123,7 +117,12 @@ const AppSidebar = () => {
                       asChild
                       // className="hover:bg-[#D8D8D8] transition-all duration-300"
                     >
-                      <Link href={item.path}>
+                      <Link
+                        href={item.path}
+                        onClick={() => {
+                          if (isMobile) setOpenMobile(false);
+                        }}
+                      >
                         <item.icon
                           color="#3DAEAC"
                           strokeWidth={pathname.startsWith(item.path) ? 3 : 2}
